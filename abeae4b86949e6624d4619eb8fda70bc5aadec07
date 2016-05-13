@@ -1,0 +1,16 @@
+Cleaning:
+make day format as variable
+put function parameters in calls as local variableis (easier to read)
+
+Testing:
+different current day / leap year
+ending newline in template
+shorter/longer, in all directions, templates
+
+Improvements:
+order day commits per time
+
+New Features:
+option to define value to fill days outside the template
+option to select start day of template
+option to center template
