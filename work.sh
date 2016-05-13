@@ -19,11 +19,14 @@ function commit_year_work()
 {
   local date_format='%Y-%m-%d'
   local start_date="$(date --date="-52 weeks next sunday" +$date_format)"
+  local date count
 
   # 357 days is 51 weeks
   for (( c = 0; c < 357; c++ ))
   do
-    commit_day_work "$(date --date="$start_date +$c day" +$date_format)" "$(day_count $c)"
+    date=$(date --date="$start_date +$c day" +$date_format)
+    count=$(day_count $c)
+    commit_day_work "$date" "$count"
   done
 }
 
@@ -32,6 +35,7 @@ function random_time()
   local hours=$(( $RANDOM % 24 ))
   local minutes=$(( $RANDOM % 60 ))
   local seconds=$(( $RANDOM % 60 ))
+
   echo $hours:$minutes:$seconds
 }
 
@@ -39,10 +43,12 @@ function commit_day_work()
 {
   local date="$1"
   local count="$2"
+  local time
 
   for ((i = 1; i <= $count; i++))
   do
-    commit_a_work "$date" "$(random_time)"
+    time=$(random_time)
+    commit_a_work "$date" "$time"
   done
 }
 
