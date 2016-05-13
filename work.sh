@@ -1,19 +1,28 @@
 #!/bin/bash
 
 REPO="$1"
+TEMPLATE="$2"
 MESSAGE='All work and no play makes Jack a dull boy.'
 AUTHOR='Jack <jack@work.com>'
 
 
+function day_count()
+{
+  local day_number="$1"
+  local row=$(( $day_number % 7 + 1))
+  local col=$(( $day_number / 7 + 1))
+
+  echo $(head "$TEMPLATE" -n $row | tail -n1 | head -c $col | tail -c1)
+}
+
 function commit_year_work()
 {
-  local count="$1"
   local start_date="$(date --date="-52 weeks next sunday" +%Y-%m-%d)"
 
   # 357 days is 51 weeks
   for (( c = 0; c < 357; c++ ))
   do
-    commit_day_work "$(date --date="$start_date +$c day" +%Y-%m-%d)" "$count"
+    commit_day_work "$(date --date="$start_date +$c day" +%Y-%m-%d)" "$(day_count $c)"
   done
 }
 
@@ -52,4 +61,4 @@ function commit_a_work()
   --quiet
 }
 
-commit_year_work 3
+commit_year_work
