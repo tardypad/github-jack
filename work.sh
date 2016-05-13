@@ -2,17 +2,19 @@
 
 REPO="$1"
 TEMPLATE="$2"
+
 MESSAGE='All work and no play makes Jack a dull boy.'
 AUTHOR='Jack <jack@work.com>'
-
+SHADE_MULTIPLIER=2
 
 function day_count()
 {
   local day_number="$1"
   local row=$(( $day_number % 7 + 1))
   local col=$(( $day_number / 7 + 1))
+  local index=$(head "$TEMPLATE" -n $row | tail -n1 | head -c $col | tail -c1)
 
-  echo $(head "$TEMPLATE" -n $row | tail -n1 | head -c $col | tail -c1)
+  echo $(( $index * $SHADE_MULTIPLIER))
 }
 
 function commit_year_work()
