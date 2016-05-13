@@ -1,5 +1,4 @@
 Cleaning:
-make day format as variable
 put function parameters in calls as local variableis (easier to read)
 
 Testing:
