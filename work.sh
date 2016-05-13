@@ -4,6 +4,19 @@ REPO="$1"
 MESSAGE='All work and no play makes Jack a dull boy.'
 AUTHOR='Jack <jack@work.com>'
 
+
+function commit_year_work()
+{
+  local count="$1"
+  local start_day="$(date --date="-52 weeks next sunday" +%Y-%m-%d)"
+
+  # 357 days is 51 weeks
+  for (( c = 0; c < 357; c++ ))
+  do
+    commit_day_work "$(date --date="$start_day +$c day" +%Y-%m-%d)" "$count"
+  done
+}
+
 function random_time()
 {
   local hours=$(( $RANDOM % 24 ))
@@ -39,4 +52,4 @@ function commit_a_work()
   --quiet
 }
 
-commit_day_work 2016-05-01 3
+commit_year_work 3
