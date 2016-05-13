@@ -8,7 +8,6 @@ ending newline in template
 shorter/longer, in all directions, templates
 
 Improvements:
-template values correspond to github color shades
 
 New Features:
 option to define value to fill days outside the template
