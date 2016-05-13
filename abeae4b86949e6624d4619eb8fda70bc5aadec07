@@ -1,12 +1,15 @@
 Cleaning:
 put function parameters in calls as local variableis (easier to read)
 
+Bugs:
+
 Testing:
 different current day / leap year
 ending newline in template
 shorter/longer, in all directions, templates
 
 Improvements:
+template values correspond to github color shades
 order day commits per time
 
 New Features:
