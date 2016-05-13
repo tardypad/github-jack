@@ -1,5 +1,4 @@
 Cleaning:
-put function parameters in calls as local variableis (easier to read)
 
 Bugs:
 
@@ -10,7 +9,6 @@ shorter/longer, in all directions, templates
 
 Improvements:
 template values correspond to github color shades
-order day commits per time
 
 New Features:
 option to define value to fill days outside the template
@@ -18,3 +16,4 @@ option to select start day of template
 option to center template
 
 Discarded:
+order day commits per time (too little value)
