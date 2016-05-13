@@ -17,12 +17,13 @@ function day_count()
 
 function commit_year_work()
 {
-  local start_date="$(date --date="-52 weeks next sunday" +%Y-%m-%d)"
+  local date_format='%Y-%m-%d'
+  local start_date="$(date --date="-52 weeks next sunday" +$date_format)"
 
   # 357 days is 51 weeks
   for (( c = 0; c < 357; c++ ))
   do
-    commit_day_work "$(date --date="$start_date +$c day" +%Y-%m-%d)" "$(day_count $c)"
+    commit_day_work "$(date --date="$start_date +$c day" +$date_format)" "$(day_count $c)"
   done
 }
 
