@@ -1,11 +1,35 @@
 #!/bin/bash
 
-REPO="$1"
-TEMPLATE="$2"
+REPO=
+TEMPLATE=
 
 MESSAGE='All work and no play makes Jack a dull boy.'
 AUTHOR='Jack <jack@work.com>'
 SHADE_MULTIPLIER=2
+
+usage()
+{
+  cat << EOF
+Usage: `basename $0` [ARGUMENT]...
+
+Generate the work of Jack to be displayed on Github's contributions board
+
+REQUIRED ARGUMENTS:
+   --repo, -r       FOLDER  repo on which Jack is working
+   --template, -t   FILE    Jack's work template
+
+OPTIONAL ARGUMENTS:
+   --help, -h               show this message only
+EOF
+  exit
+}
+
+error()
+{
+  [ -z "$1" ] || echo "$1"
+  echo "Try `basename $0` -h for more information"
+  exit 1
+}
 
 function day_count()
 {
@@ -69,5 +93,33 @@ function commit_a_work()
   --date "$date $time" \
   --quiet
 }
+
+while [[ "$#" -gt 0 ]]
+do
+  case "$1" in
+  --help|-h)
+        usage
+        ;;
+  --repo|-r)
+        [ -n "$2" ] || error 'Missing repo path'
+        REPO="$2"
+        shift 2
+        ;;
+  --template|-t)
+        [ -n "$2" ] || error 'Missing template path'
+        TEMPLATE="$2"
+        shift 2
+        ;;
+  *)
+        error 'Unrecognized argument'
+        ;;
+  esac
+done
+
+[ -n "$REPO" ] || error 'Missing repo argument'
+[ -n "$TEMPLATE" ] || error 'Missing template argument'
+
+[ -d "$REPO" ] || error 'Invalid repo path'
+[ -f "$TEMPLATE" ] || error 'Invalid template path'
 
 commit_year_work
