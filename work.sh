@@ -29,12 +29,12 @@ error()
   exit 1
 }
 
-function info()
+info()
 {
   "$VERBOSE" && [ -n "$1" ] && echo "$1"
 }
 
-function reset_work()
+reset_work()
 {
   while true; do
     read -p "Are you sure you want to reset the previous work of that repo? "
@@ -49,7 +49,7 @@ function reset_work()
   git --git-dir="$REPO/.git" --work-tree="$REPO" init --quiet
 }
 
-function day_count()
+day_count()
 {
   local day_number="$1"
   local row=$(( $day_number % 7 + 1))
@@ -59,7 +59,7 @@ function day_count()
   echo $(( $index * $SHADE_MULTIPLIER))
 }
 
-function commit_year_work()
+commit_year_work()
 {
   local date_format='%Y-%m-%d'
   local start_date="$(date --date="-52 weeks next sunday" +$date_format)"
@@ -74,7 +74,7 @@ function commit_year_work()
   done
 }
 
-function random_time()
+random_time()
 {
   local hours=$(( $RANDOM % 24 ))
   local minutes=$(( $RANDOM % 60 ))
@@ -83,7 +83,7 @@ function random_time()
   echo $hours:$minutes:$seconds
 }
 
-function commit_day_work()
+commit_day_work()
 {
   local date="$1"
   local count="$2"
@@ -96,7 +96,7 @@ function commit_day_work()
   done
 }
 
-function commit_a_work()
+commit_a_work()
 {
   local date="$1"
   local time="$2"
