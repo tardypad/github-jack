@@ -17,6 +17,7 @@ REQUIRED ARGUMENTS:
 
 OPTIONAL ARGUMENTS:
    --help, -h               show this message only
+   --force, -f              don't ask for any confirmation
    --verbose, -v            verbose mode
 EOF
   exit
@@ -36,14 +37,17 @@ info()
 
 reset_work()
 {
-  while true; do
-    read -p "Are you sure you want to reset the previous work of that repo? "
-    case $REPLY in
-        yes|y) break;;
-        no|n) exit;;
-        *) echo "Please answer yes or no.";;
-    esac
-  done
+  if ! $FORCE
+  then
+    while true; do
+      read -p "Are you sure you want to reset the previous work of that repo? "
+      case $REPLY in
+          yes|y) break;;
+          no|n) exit;;
+          *) echo "Please answer yes or no.";;
+      esac
+    done
+  fi
 
   rm -rf "$REPO/.git"
   git --git-dir="$REPO/.git" --work-tree="$REPO" init --quiet
@@ -116,6 +120,7 @@ commit_a_work()
 REPO=
 TEMPLATE=
 VERBOSE=false
+FORCE=false
 
 while [[ "$#" -gt 0 ]]
 do
@@ -132,6 +137,10 @@ do
         [ -n "$2" ] || error 'Missing template path'
         TEMPLATE="$2"
         shift 2
+        ;;
+  --force|-f)
+        FORCE=true
+        shift
         ;;
   --verbose|-v)
         VERBOSE=true
