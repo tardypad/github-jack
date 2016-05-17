@@ -1,8 +1,5 @@
 #!/bin/bash
 
-REPO=
-TEMPLATE=
-
 MESSAGE='All work and no play makes Jack a dull boy.'
 AUTHOR='Jack <jack@work.com>'
 SHADE_MULTIPLIER=2
@@ -20,6 +17,7 @@ REQUIRED ARGUMENTS:
 
 OPTIONAL ARGUMENTS:
    --help, -h               show this message only
+   --verbose, -v            verbose mode
 EOF
   exit
 }
@@ -29,6 +27,11 @@ error()
   [ -z "$1" ] || echo "$1"
   echo "Try `basename $0` -h for more information"
   exit 1
+}
+
+function info()
+{
+  "$VERBOSE" && [ -n "$1" ] && echo "$1"
 }
 
 function reset_work()
@@ -109,6 +112,11 @@ function commit_a_work()
   --quiet
 }
 
+
+REPO=
+TEMPLATE=
+VERBOSE=false
+
 while [[ "$#" -gt 0 ]]
 do
   case "$1" in
@@ -125,6 +133,10 @@ do
         TEMPLATE="$2"
         shift 2
         ;;
+  --verbose|-v)
+        VERBOSE=true
+        shift
+        ;;
   *)
         error 'Unrecognized argument'
         ;;
@@ -138,4 +150,7 @@ done
 [ -f "$TEMPLATE" ] || error 'Invalid template path'
 
 reset_work
+
+info 'Committing work...'
 commit_year_work
+info "$MESSAGE"
