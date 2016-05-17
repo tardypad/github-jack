@@ -31,6 +31,21 @@ error()
   exit 1
 }
 
+function reset_work()
+{
+  while true; do
+    read -p "Are you sure you want to reset the previous work of that repo? "
+    case $REPLY in
+        yes|y) break;;
+        no|n) exit;;
+        *) echo "Please answer yes or no.";;
+    esac
+  done
+
+  rm -rf "$REPO/.git"
+  git --git-dir="$REPO/.git" --work-tree="$REPO" init --quiet
+}
+
 function day_count()
 {
   local day_number="$1"
@@ -122,4 +137,5 @@ done
 [ -d "$REPO" ] || error 'Invalid repo path'
 [ -f "$TEMPLATE" ] || error 'Invalid template path'
 
+reset_work
 commit_year_work
