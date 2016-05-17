@@ -8,11 +8,15 @@ ending newline in template
 shorter/longer, in all directions, templates
 
 Improvements:
+define default template
 
 New Features:
 option to define value to fill days outside the template
 option to select start day of template
 option to center template
+option to define message
+option to define user name and email
+option to set the shade multiplier
 
 Discarded:
 order day commits per time (too little value)
