@@ -80,9 +80,9 @@ commit_year_work()
 
 random_time()
 {
-  local hours=$(( $RANDOM % 24 ))
-  local minutes=$(( $RANDOM % 60 ))
-  local seconds=$(( $RANDOM % 60 ))
+  local hours=$(printf %02d $(( $RANDOM % 24 )))
+  local minutes=$(printf %02d $(( $RANDOM % 60 )))
+  local seconds=$(printf %02d $(( $RANDOM % 60 )))
 
   echo $hours:$minutes:$seconds
 }
@@ -91,12 +91,16 @@ commit_day_work()
 {
   local date="$1"
   local count="$2"
-  local time
+  local times
 
   for ((i = 1; i <= $count; i++))
   do
-    time=$(random_time)
-    commit_a_work "$date" "$time"
+    times="$times $(random_time)"
+  done
+
+  for time in $(echo "$times" | tr " " "\n" | sort)
+  do
+   commit_a_work "$date" "$time"
   done
 }
 
