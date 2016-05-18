@@ -7,6 +7,7 @@ different current day / leap year
 
 Improvements:
 define default template
+use user config to define worker name and email
 Add README
 
 New Features:
