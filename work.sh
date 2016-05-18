@@ -15,9 +15,9 @@ REQUIRED ARGUMENTS:
    --template, -t   FILE    Jack's work template
 
 OPTIONAL ARGUMENTS:
-   --message, -m    VALUE   change commits message
-   --help, -h               show this message only
    --force, -f              don't ask for any confirmation
+   --help, -h               show this message only
+   --message, -m    VALUE   change commits message
    --verbose, -v            verbose mode
 
 DEFAULT VALUES:
@@ -135,8 +135,17 @@ FORCE=false
 while [[ "$#" -gt 0 ]]
 do
   case "$1" in
+  --force|-f)
+        FORCE=true
+        shift
+        ;;
   --help|-h)
         usage
+        ;;
+  --message|-m)
+        [ -n "$2" ] || error 'Missing message value'
+        MESSAGE="$2"
+        shift 2
         ;;
   --repo|-r)
         [ -n "$2" ] || error 'Missing repo path'
@@ -147,15 +156,6 @@ do
         [ -n "$2" ] || error 'Missing template path'
         TEMPLATE="$2"
         shift 2
-        ;;
-  --message|-m)
-        [ -n "$2" ] || error 'Missing message value'
-        MESSAGE="$2"
-        shift 2
-        ;;
-  --force|-f)
-        FORCE=true
-        shift
         ;;
   --verbose|-v)
         VERBOSE=true
