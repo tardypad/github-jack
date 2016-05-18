@@ -191,10 +191,10 @@ done
 [ -n "$REPO" ] || error 'Missing repository argument'
 [ -n "$TEMPLATE" ] || error 'Missing template argument'
 
-[ -d "$REPO" ] || error 'Invalid repository path'
-[ -f "$TEMPLATE" ] || error 'Invalid template path'
+[ -d "$REPO" ] || error 'Invalid repository path: non existing folder'
+[ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
 
-[[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier'
+[[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier: non strictly positive integer'
 
 reset_work
 commit_work
