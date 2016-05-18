@@ -6,7 +6,7 @@ SHADE_MULTIPLIER=2
 usage()
 {
   cat << EOF
-Usage: `basename $0` [ARGUMENT]...
+Usage: $( basename $0 ) [ARGUMENT]...
 
 Generate the work of Jack to be displayed on Github's contributions board
 
@@ -29,7 +29,7 @@ EOF
 error()
 {
   [ -z "$1" ] || echo "$1"
-  echo "Try `basename $0` -h for more information"
+  echo "Try $( basename $0 ) -h for more information"
   exit 1
 }
 
