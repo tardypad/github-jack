@@ -56,33 +56,33 @@ reset_work()
 day_count()
 {
   local day_number="$1"
-  local row=$(( $day_number % 7 + 1))
-  local col=$(( $day_number / 7 + 1))
-  local index=$(head "$TEMPLATE" -n $row | tail -n1 | head -c $col | tail -c1)
+  local row=$(( $day_number % 7 + 1 ))
+  local col=$(( $day_number / 7 + 1 ))
+  local index=$( head "$TEMPLATE" -n $row | tail -n1 | head -c $col | tail -c1 )
 
-  echo $(( $index * $SHADE_MULTIPLIER))
+  echo $(( $index * $SHADE_MULTIPLIER ))
 }
 
 commit_work()
 {
   local date_format='%Y-%m-%d'
-  local start_date="$(date --date="-52 weeks next sunday" +$date_format)"
-  local days=$(( $(wc --max-line-length < "$TEMPLATE") * 7 ))
+  local start_date="$( date --date="-52 weeks next sunday" +$date_format )"
+  local days=$(( $( wc --max-line-length < "$TEMPLATE" ) * 7 ))
   local date count
 
   for (( c = 0; c < "$days"; c++ ))
   do
-    date=$(date --date="$start_date +$c day" +$date_format)
-    count=$(day_count $c)
+    date=$( date --date="$start_date +$c day" +$date_format )
+    count=$( day_count $c )
     commit_day_work "$date" "$count"
   done
 }
 
 random_time()
 {
-  local hours=$(printf %02d $(( $RANDOM % 24 )))
-  local minutes=$(printf %02d $(( $RANDOM % 60 )))
-  local seconds=$(printf %02d $(( $RANDOM % 60 )))
+  local hours=$( printf %02d $(( $RANDOM % 24 )) )
+  local minutes=$( printf %02d $(( $RANDOM % 60 )) )
+  local seconds=$( printf %02d $(( $RANDOM % 60 )) )
 
   echo $hours:$minutes:$seconds
 }
@@ -95,10 +95,10 @@ commit_day_work()
 
   for ((i = 1; i <= $count; i++))
   do
-    times="$times $(random_time)"
+    times="$times $( random_time )"
   done
 
-  for time in $(echo "$times" | tr " " "\n" | sort)
+  for time in $( echo "$times" | tr " " "\n" | sort )
   do
    commit_a_work "$date" "$time"
   done
