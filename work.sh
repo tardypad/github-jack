@@ -10,7 +10,7 @@ Usage: $( basename $0 ) [ARGUMENT]...
 Generate the work to be displayed on Github's contributions board
 
 REQUIRED ARGUMENTS:
-   --repo, -r       FOLDER  define work repository
+   --repository, -r FOLDER  define work repository
    --template, -t   FILE    define work template
 
 OPTIONAL ARGUMENTS:
@@ -32,7 +32,7 @@ EOF
 error()
 {
   [ -z "$1" ] || echo "$1"
-  echo "Try $( basename $0 ) -h for more information"
+  echo "Try '$( basename $0 ) --help' for more information"
   exit 1
 }
 
@@ -46,7 +46,7 @@ reset_work()
   if ! $FORCE
   then
     while true; do
-      read -p "Are you sure you want to reset the previous work of that repo? "
+      read -p "Are you sure you want to reset the previous work of that repository? "
       case $REPLY in
           yes|y) break;;
           no|n) exit;;
@@ -162,8 +162,8 @@ do
         NAME="$2"
         shift 2
         ;;
-  --repo|-r)
-        [ -n "$2" ] || error 'Missing repo path'
+  --repository|-r)
+        [ -n "$2" ] || error 'Missing repository path'
         REPO="$2"
         shift 2
         ;;
@@ -177,15 +177,15 @@ do
         shift
         ;;
   *)
-        error 'Unrecognized argument'
+        error "Invalid argument '$1'"
         ;;
   esac
 done
 
-[ -n "$REPO" ] || error 'Missing repo argument'
+[ -n "$REPO" ] || error 'Missing repository argument'
 [ -n "$TEMPLATE" ] || error 'Missing template argument'
 
-[ -d "$REPO" ] || error 'Invalid repo path'
+[ -d "$REPO" ] || error 'Invalid repository path'
 [ -f "$TEMPLATE" ] || error 'Invalid template path'
 
 reset_work
