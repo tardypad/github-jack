@@ -1,6 +1,5 @@
 #!/bin/bash
 
-MESSAGE='All work and no play makes Jack a dull boy.'
 AUTHOR='Jack <jack@work.com>'
 SHADE_MULTIPLIER=2
 
@@ -16,9 +15,13 @@ REQUIRED ARGUMENTS:
    --template, -t   FILE    Jack's work template
 
 OPTIONAL ARGUMENTS:
+   --message, -m    VALUE   change commits message
    --help, -h               show this message only
    --force, -f              don't ask for any confirmation
    --verbose, -v            verbose mode
+
+DEFAULT VALUES:
+   commits message          All work and no play makes Jack a dull boy.
 EOF
   exit
 }
@@ -123,6 +126,7 @@ commit_a_work()
 
 REPO=
 TEMPLATE=
+MESSAGE='All work and no play makes Jack a dull boy.'
 VERBOSE=false
 FORCE=false
 
@@ -140,6 +144,11 @@ do
   --template|-t)
         [ -n "$2" ] || error 'Missing template path'
         TEMPLATE="$2"
+        shift 2
+        ;;
+  --message|-m)
+        [ -n "$2" ] || error 'Missing message value'
+        MESSAGE="$2"
         shift 2
         ;;
   --force|-f)
