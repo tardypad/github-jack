@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SHADE_MULTIPLIER=2
-
 usage()
 {
   cat << EOF
@@ -14,6 +12,7 @@ REQUIRED ARGUMENTS:
    --template, -t   FILE    define work template
 
 OPTIONAL ARGUMENTS:
+   --color, -c      INT     define work multiplier to adjust color shades
    --email, -e      VALUE   define worker email
    --force, -f              don't ask for any confirmation
    --help, -h               show this message only
@@ -25,6 +24,7 @@ DEFAULT VALUES:
    worker name              Jack
    worker email             jack@work.com
    work message             All work and no play makes Jack a dull boy.
+   color multiplier         2
 EOF
   exit
 }
@@ -66,7 +66,7 @@ day_count()
   local col=$(( $day_number / 7 + 1 ))
   local index=$( head "$TEMPLATE" -n $row | tail -n1 | head -c $col | tail -c1 )
 
-  echo $(( $index * $SHADE_MULTIPLIER ))
+  echo $(( $index * $COLOR_MULTIPLIER ))
 }
 
 commit_work()
@@ -131,6 +131,7 @@ commit_a_work()
 
 REPO=
 TEMPLATE=
+COLOR_MULTIPLIER=2
 NAME='Jack'
 EMAIL='jack@work.com'
 MESSAGE='All work and no play makes Jack a dull boy.'
@@ -140,6 +141,11 @@ FORCE=false
 while [[ "$#" -gt 0 ]]
 do
   case "$1" in
+  --color|-c)
+        [ -n "$2" ] || error 'Missing color value'
+        COLOR_MULTIPLIER="$2"
+        shift 2
+        ;;
   --email|-e)
         [ -n "$2" ] || error 'Missing email value'
         EMAIL="$2"
@@ -187,6 +193,8 @@ done
 
 [ -d "$REPO" ] || error 'Invalid repository path'
 [ -f "$TEMPLATE" ] || error 'Invalid template path'
+
+[[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier'
 
 reset_work
 commit_work
