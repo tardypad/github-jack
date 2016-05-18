@@ -63,14 +63,14 @@ day_count()
   echo $(( $index * $SHADE_MULTIPLIER))
 }
 
-commit_year_work()
+commit_work()
 {
   local date_format='%Y-%m-%d'
   local start_date="$(date --date="-52 weeks next sunday" +$date_format)"
+  local days=$(( $(wc --max-line-length < "$TEMPLATE") * 7 ))
   local date count
 
-  # 357 days is 51 weeks
-  for (( c = 0; c < 357; c++ ))
+  for (( c = 0; c < "$days"; c++ ))
   do
     date=$(date --date="$start_date +$c day" +$date_format)
     count=$(day_count $c)
@@ -165,5 +165,5 @@ done
 reset_work
 
 info 'Committing work...'
-commit_year_work
+commit_work
 info "$MESSAGE"
