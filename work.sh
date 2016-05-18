@@ -7,24 +7,24 @@ usage()
   cat << EOF
 Usage: $( basename $0 ) [ARGUMENT]...
 
-Generate the work of Jack to be displayed on Github's contributions board
+Generate the work to be displayed on Github's contributions board
 
 REQUIRED ARGUMENTS:
-   --repo, -r       FOLDER  repo on which Jack is working
-   --template, -t   FILE    Jack's work template
+   --repo, -r       FOLDER  define work repository
+   --template, -t   FILE    define work template
 
 OPTIONAL ARGUMENTS:
-   --email, -e      VALUE   change commits author email
+   --email, -e      VALUE   define worker email
    --force, -f              don't ask for any confirmation
    --help, -h               show this message only
-   --message, -m    VALUE   change commits message
-   --name, -n       VALUE   change commits author name
+   --message, -m    VALUE   define work message
+   --name, -n       VALUE   define worker name
    --verbose, -v            verbose mode
 
 DEFAULT VALUES:
-   commits author name      Jack
-   commits author email     jack@work.com
-   commits message          All work and no play makes Jack a dull boy.
+   worker name              Jack
+   worker email             jack@work.com
+   work message             All work and no play makes Jack a dull boy.
 EOF
   exit
 }
