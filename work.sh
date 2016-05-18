@@ -96,6 +96,8 @@ commit_day_work()
   local count="$2"
   local times
 
+  info "Committing day work $date $count"
+
   for ((i = 1; i <= $count; i++))
   do
     times="$times $( random_time )"
@@ -172,7 +174,6 @@ done
 [ -f "$TEMPLATE" ] || error 'Invalid template path'
 
 reset_work
-
-info 'Committing work...'
 commit_work
+
 info "$MESSAGE"
