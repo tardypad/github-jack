@@ -1,6 +1,5 @@
 #!/bin/bash
 
-AUTHOR='Jack <jack@work.com>'
 SHADE_MULTIPLIER=2
 
 usage()
@@ -15,12 +14,16 @@ REQUIRED ARGUMENTS:
    --template, -t   FILE    Jack's work template
 
 OPTIONAL ARGUMENTS:
+   --email, -e      VALUE   change commits author email
    --force, -f              don't ask for any confirmation
    --help, -h               show this message only
    --message, -m    VALUE   change commits message
+   --name, -n       VALUE   change commits author name
    --verbose, -v            verbose mode
 
 DEFAULT VALUES:
+   commits author name      Jack
+   commits author email     jack@work.com
    commits message          All work and no play makes Jack a dull boy.
 EOF
   exit
@@ -120,7 +123,7 @@ commit_a_work()
   commit \
   --allow-empty \
   --message "$MESSAGE" \
-  --author "$AUTHOR" \
+  --author "$NAME <$EMAIL>" \
   --date "$date $time" \
   --quiet
 }
@@ -128,6 +131,8 @@ commit_a_work()
 
 REPO=
 TEMPLATE=
+NAME='Jack'
+EMAIL='jack@work.com'
 MESSAGE='All work and no play makes Jack a dull boy.'
 VERBOSE=false
 FORCE=false
@@ -135,6 +140,11 @@ FORCE=false
 while [[ "$#" -gt 0 ]]
 do
   case "$1" in
+  --email|-e)
+        [ -n "$2" ] || error 'Missing email value'
+        EMAIL="$2"
+        shift 2
+        ;;
   --force|-f)
         FORCE=true
         shift
@@ -145,6 +155,11 @@ do
   --message|-m)
         [ -n "$2" ] || error 'Missing message value'
         MESSAGE="$2"
+        shift 2
+        ;;
+  --name|-n)
+        [ -n "$2" ] || error 'Missing name value'
+        NAME="$2"
         shift 2
         ;;
   --repo|-r)
