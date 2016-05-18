@@ -4,8 +4,6 @@ Bugs:
 
 Testing:
 different current day / leap year
-ending newline in template
-shorter/longer, in all directions, templates
 
 Improvements:
 define default template
