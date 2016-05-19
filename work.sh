@@ -55,8 +55,8 @@ reset_work()
     done
   fi
 
-  rm -rf "$REPO/.git"
-  git --git-dir="$REPO/.git" --work-tree="$REPO" init --quiet
+  rm -rf "$REPOSITORY/.git"
+  git --git-dir="$REPOSITORY/.git" --work-tree="$REPOSITORY" init --quiet
 }
 
 day_count()
@@ -118,8 +118,8 @@ commit_a_work()
   local time="$2"
 
   git \
-  --git-dir="$REPO/.git" \
-  --work-tree="$REPO" \
+  --git-dir="$REPOSITORY/.git" \
+  --work-tree="$REPOSITORY" \
   commit \
   --allow-empty \
   --message "$MESSAGE" \
@@ -129,7 +129,7 @@ commit_a_work()
 }
 
 
-REPO=
+REPOSITORY=
 TEMPLATE=
 COLOR_MULTIPLIER=2
 NAME='Jack'
@@ -170,7 +170,7 @@ do
         ;;
   --repository|-r)
         [ -n "$2" ] || error 'Missing repository path'
-        REPO="$2"
+        REPOSITORY="$2"
         shift 2
         ;;
   --template|-t)
@@ -188,10 +188,10 @@ do
   esac
 done
 
-[ -n "$REPO" ] || error 'Missing repository argument'
+[ -n "$REPOSITORY" ] || error 'Missing repository argument'
 [ -n "$TEMPLATE" ] || error 'Missing template argument'
 
-[ -d "$REPO" ] || error 'Invalid repository path: non existing folder'
+[ -d "$REPOSITORY" ] || error 'Invalid repository path: non existing folder'
 [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
 
 [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier: non strictly positive integer'
