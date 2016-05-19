@@ -135,7 +135,9 @@ validate_template()
     error 'Invalid template: should contain only characters from 0 to 4 and newlines'
   fi
 
-  if [ $( wc --lines < "$TEMPLATE" ) != 7 ]
+  local trimmed_template=$( sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$TEMPLATE" )
+
+  if [ $( echo "$trimmed_template" | wc --lines ) != 7 ]
   then
     error 'Invalid template: should have 7 lines'
   fi
@@ -148,7 +150,7 @@ validate_template()
     line_length=${#line}
     [ "$line_length" -gt 0 ] || error 'Invalid template: empty lines are not allowed'
     [ "$line_length" == "$max_line_length" ] || error 'Invalid template: all lines should have the same length'
-  done < "$TEMPLATE"
+  done < <( echo "$trimmed_template" )
 }
 
 
