@@ -128,6 +128,29 @@ commit_a_work()
   --quiet
 }
 
+validate_template()
+{
+  if [ $( tr --delete 01234'\n' < "$TEMPLATE" | wc --chars ) != 0 ]
+  then
+    error 'Invalid template: should contain only characters from 0 to 4 and newlines'
+  fi
+
+  if [ $( wc --lines < "$TEMPLATE" ) != 7 ]
+  then
+    error 'Invalid template: should have 7 lines'
+  fi
+
+  local max_line_length=$( wc --max-line-length < "$TEMPLATE" )
+  local line_length
+
+  while read line
+  do
+    line_length=${#line}
+    [ "$line_length" -gt 0 ] || error 'Invalid template: empty lines are not allowed'
+    [ "$line_length" == "$max_line_length" ] || error 'Invalid template: all lines should have the same length'
+  done < "$TEMPLATE"
+}
+
 
 REPOSITORY=
 TEMPLATE=
@@ -195,6 +218,8 @@ done
 [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
 
 [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier: non strictly positive integer'
+
+validate_template
 
 reset_work
 commit_work
