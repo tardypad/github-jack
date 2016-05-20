@@ -2,6 +2,17 @@
 
 SCRIPT_DIR=$( dirname "$( readlink -f "$0" )" )
 
+COLOR_MULTIPLIER=2
+EMAIL='jack@work.com'
+FORCE=false
+MESSAGE='All work and no play makes Jack a dull boy.'
+NAME='Jack'
+REPOSITORY=
+TEMPLATE="$SCRIPT_DIR/templates/jack"
+VERBOSE=false
+WRITE_FILE=
+
+
 usage()
 {
   cat << EOF
@@ -164,16 +175,6 @@ validate_template()
   done < <( echo "$trimmed_template" )
 }
 
-
-REPOSITORY=
-TEMPLATE="$SCRIPT_DIR/templates/jack"
-COLOR_MULTIPLIER=2
-NAME='Jack'
-EMAIL='jack@work.com'
-MESSAGE='All work and no play makes Jack a dull boy.'
-VERBOSE=false
-FORCE=false
-WRITE_FILE=
 
 while [[ "$#" -gt 0 ]]
 do
