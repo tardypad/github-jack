@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR=$( dirname "$( readlink -f "$0" )" )
+
 usage()
 {
   cat << EOF
@@ -9,7 +11,6 @@ Generate the work to be displayed on Github's contributions board
 
 REQUIRED ARGUMENTS:
    --repository, -r FOLDER  define work repository
-   --template, -t   FILE    define work template
 
 OPTIONAL ARGUMENTS:
    --color, -c      INT     define work multiplier to adjust color shades
@@ -18,9 +19,11 @@ OPTIONAL ARGUMENTS:
    --help, -h               show this message only
    --message, -m    VALUE   define work message
    --name, -n       VALUE   define worker name
+   --template, -t   FILE    define work template
    --verbose, -v            verbose mode
 
 DEFAULT VALUES:
+   work template            templates/jack
    worker name              Jack
    worker email             jack@work.com
    work message             All work and no play makes Jack a dull boy.
@@ -155,7 +158,7 @@ validate_template()
 
 
 REPOSITORY=
-TEMPLATE=
+TEMPLATE="$SCRIPT_DIR/templates/jack"
 COLOR_MULTIPLIER=2
 NAME='Jack'
 EMAIL='jack@work.com'
@@ -214,7 +217,6 @@ do
 done
 
 [ -n "$REPOSITORY" ] || error 'Missing repository argument'
-[ -n "$TEMPLATE" ] || error 'Missing template argument'
 
 [ -d "$REPOSITORY" ] || error 'Invalid repository path: non existing folder'
 [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
