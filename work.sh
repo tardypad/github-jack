@@ -175,6 +175,18 @@ validate_template()
   done < <( echo "$trimmed_template" )
 }
 
+validate_inputs()
+{
+  [ -n "$REPOSITORY" ] || error 'Missing repository argument'
+
+  [ -d "$REPOSITORY" ] || error 'Invalid repository path: non existing folder'
+  [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
+
+  [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier: non strictly positive integer'
+
+  validate_template
+}
+
 
 while [[ "$#" -gt 0 ]]
 do
@@ -231,14 +243,8 @@ do
   esac
 done
 
-[ -n "$REPOSITORY" ] || error 'Missing repository argument'
 
-[ -d "$REPOSITORY" ] || error 'Invalid repository path: non existing folder'
-[ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
-
-[[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier: non strictly positive integer'
-
-validate_template
+validate_inputs
 
 reset_work
 commit_work
