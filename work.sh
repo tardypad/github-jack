@@ -35,7 +35,7 @@ OPTIONAL ARGUMENTS:
    --write, -w      VALUE   write work message into repository file
 
 DEFAULT VALUES:
-   work template            templates/jack
+   work template            $SCRIPT_DIR/templates/jack
    worker name              Jack
    worker email             jack@work.com
    work message             All work and no play makes Jack a dull boy.
