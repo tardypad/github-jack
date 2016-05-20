@@ -49,7 +49,7 @@ reset_work()
   if ! $FORCE
   then
     while true; do
-      read -p "Are you sure you want to reset the previous work of that repository? "
+      read -p "Confirm the reset of that repository work? "
       case $REPLY in
           yes|y) break;;
           no|n) exit;;
