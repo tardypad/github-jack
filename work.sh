@@ -187,63 +187,66 @@ validate_inputs()
   validate_template
 }
 
+parse_inputs()
+{
+  while [[ "$#" -gt 0 ]]
+  do
+    case "$1" in
+    --color|-c)
+      [ -n "$2" ] || error 'Missing color value'
+      COLOR_MULTIPLIER="$2"
+      shift 2
+      ;;
+    --email|-e)
+      [ -n "$2" ] || error 'Missing email value'
+      EMAIL="$2"
+      shift 2
+      ;;
+    --force|-f)
+      FORCE=true
+      shift
+      ;;
+    --help|-h)
+      usage
+      ;;
+    --message|-m)
+      [ -n "$2" ] || error 'Missing message value'
+      MESSAGE="$2"
+      shift 2
+      ;;
+    --name|-n)
+      [ -n "$2" ] || error 'Missing name value'
+      NAME="$2"
+      shift 2
+      ;;
+    --repository|-r)
+      [ -n "$2" ] || error 'Missing repository path'
+      REPOSITORY="$2"
+      shift 2
+      ;;
+    --template|-t)
+      [ -n "$2" ] || error 'Missing template path'
+      TEMPLATE="$2"
+      shift 2
+      ;;
+    --verbose|-v)
+      VERBOSE=true
+      shift
+      ;;
+    --write|-w)
+      [ -n "$2" ] || error 'Missing write filename value'
+      WRITE_FILE="$2"
+      shift 2
+      ;;
+    *)
+      error "Invalid argument '$1'"
+      ;;
+    esac
+  done
+}
 
-while [[ "$#" -gt 0 ]]
-do
-  case "$1" in
-  --color|-c)
-        [ -n "$2" ] || error 'Missing color value'
-        COLOR_MULTIPLIER="$2"
-        shift 2
-        ;;
-  --email|-e)
-        [ -n "$2" ] || error 'Missing email value'
-        EMAIL="$2"
-        shift 2
-        ;;
-  --force|-f)
-        FORCE=true
-        shift
-        ;;
-  --help|-h)
-        usage
-        ;;
-  --message|-m)
-        [ -n "$2" ] || error 'Missing message value'
-        MESSAGE="$2"
-        shift 2
-        ;;
-  --name|-n)
-        [ -n "$2" ] || error 'Missing name value'
-        NAME="$2"
-        shift 2
-        ;;
-  --repository|-r)
-        [ -n "$2" ] || error 'Missing repository path'
-        REPOSITORY="$2"
-        shift 2
-        ;;
-  --template|-t)
-        [ -n "$2" ] || error 'Missing template path'
-        TEMPLATE="$2"
-        shift 2
-        ;;
-  --verbose|-v)
-        VERBOSE=true
-        shift
-        ;;
-  --write|-w)
-        [ -n "$2" ] || error 'Missing write filename value'
-        WRITE_FILE="$2"
-        shift 2
-        ;;
-  *)
-        error "Invalid argument '$1'"
-        ;;
-  esac
-done
 
-
+parse_inputs "$@"
 validate_inputs
 
 reset_work
