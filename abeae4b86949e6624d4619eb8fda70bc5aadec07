@@ -1,4 +1,5 @@
 Cleaning:
+shorten long lines below 80 characters
 
 Bugs:
 
@@ -6,6 +7,8 @@ Testing:
 different current day / leap year
 
 Improvements:
+create repository folder if not present
+use current folder by default (put extra checks/confirmations)
 use user config to define worker name and email
 Add README
 
