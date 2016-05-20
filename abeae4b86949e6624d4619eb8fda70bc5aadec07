@@ -13,6 +13,5 @@ New Features:
 option to define value to fill days outside the template
 option to select start day of template
 option to center template
-write message into file for each commit + option
 
 Discarded:
