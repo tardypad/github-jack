@@ -21,6 +21,7 @@ OPTIONAL ARGUMENTS:
    --name, -n       VALUE   define worker name
    --template, -t   FILE    define work template
    --verbose, -v            verbose mode
+   --write, -w      VALUE   write work message into repository file
 
 DEFAULT VALUES:
    work template            templates/jack
@@ -58,6 +59,7 @@ reset_work()
     done
   fi
 
+  [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
   rm -rf "$REPOSITORY/.git"
   git --git-dir="$REPOSITORY/.git" --work-tree="$REPOSITORY" init --quiet
 }
@@ -120,6 +122,12 @@ commit_a_work()
   local date="$1"
   local time="$2"
 
+  if [ -n "$WRITE_FILE" ]
+  then
+    echo "$MESSAGE" >> "$REPOSITORY/$WRITE_FILE"
+    git --git-dir="$REPOSITORY/.git" --work-tree="$REPOSITORY" add "$WRITE_FILE"
+  fi
+
   git \
   --git-dir="$REPOSITORY/.git" \
   --work-tree="$REPOSITORY" \
@@ -165,6 +173,7 @@ EMAIL='jack@work.com'
 MESSAGE='All work and no play makes Jack a dull boy.'
 VERBOSE=false
 FORCE=false
+WRITE_FILE=
 
 while [[ "$#" -gt 0 ]]
 do
@@ -209,6 +218,11 @@ do
   --verbose|-v)
         VERBOSE=true
         shift
+        ;;
+  --write|-w)
+        [ -n "$2" ] || error 'Missing write filename value'
+        WRITE_FILE="$2"
+        shift 2
         ;;
   *)
         error "Invalid argument '$1'"
