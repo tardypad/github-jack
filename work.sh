@@ -12,6 +12,16 @@ TEMPLATE="$SCRIPT_DIR/templates/jack"
 VERBOSE=false
 WRITE_FILE=
 
+if git config --global --includes user.name &> /dev/null
+then
+  NAME=$( git config --global --includes user.name )
+fi
+
+if git config --global --includes user.email &> /dev/null
+then
+  EMAIL=$( git config --global --includes user.email )
+fi
+
 
 usage()
 {
@@ -35,8 +45,8 @@ OPTIONAL ARGUMENTS:
 DEFAULT VALUES:
    work repository          current folder
    work template            $SCRIPT_DIR/templates/jack
-   worker name              Jack
-   worker email             jack@work.com
+   worker name              user global git name (Jack if not defined)
+   worker email             user global git email (jack@work.com if not defined)
    work message             All work and no play makes Jack a dull boy.
    color multiplier         2
 EOF
