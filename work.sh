@@ -59,10 +59,11 @@ reset_work()
 {
   if [ -d "$REPOSITORY" ]
   then
-    if ! $FORCE
-    then
-      local repository_name=$( basename $( readlink -f "$REPOSITORY" ) )
+    local repository_name=$( basename $( readlink -f "$REPOSITORY" ) )
 
+    if ! $FORCE && \
+      ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] )
+    then
       while true; do
         read -p "Confirm the reset of that \"$repository_name\" repository work? "
         case $REPLY in
@@ -72,13 +73,15 @@ reset_work()
         esac
       done
     fi
+
+    info "Resetting $repository_name work repository"
+    rm -rf "$REPOSITORY/.git"
+    [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
   else
+    info "Creating $REPOSITORY work repository"
     mkdir -p "$REPOSITORY"
   fi
 
-  [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
-
-  rm -rf "$REPOSITORY/.git"
   git --git-dir="$REPOSITORY/.git" --work-tree="$REPOSITORY" init --quiet
 }
 
