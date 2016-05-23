@@ -10,6 +10,7 @@ use user config to define worker name and email
 Add README
 
 New Features:
+option to keep current commits (no reset)
 option to define value to fill days outside the template
 option to select start day of template
 option to center template
