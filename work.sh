@@ -136,7 +136,11 @@ commit_a_work()
   if [ -n "$WRITE_FILE" ]
   then
     echo "$MESSAGE" >> "$REPOSITORY/$WRITE_FILE"
-    git --git-dir="$REPOSITORY/.git" --work-tree="$REPOSITORY" add "$WRITE_FILE"
+    git \
+    --git-dir="$REPOSITORY/.git" \
+    --work-tree="$REPOSITORY" \
+    add \
+    "$WRITE_FILE"
   fi
 
   git \
@@ -154,7 +158,7 @@ validate_template()
 {
   if [ $( tr --delete 01234'\n' < "$TEMPLATE" | wc --chars ) != 0 ]
   then
-    error 'Invalid template: should contain only characters from 0 to 4 and newlines'
+    error 'Invalid template: should contain only integers 0 to 4 and newlines'
   fi
 
   local trimmed_template=$( sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$TEMPLATE" )
@@ -170,8 +174,16 @@ validate_template()
   while read line
   do
     line_length=${#line}
-    [ "$line_length" -gt 0 ] || error 'Invalid template: empty lines are not allowed'
-    [ "$line_length" == "$max_line_length" ] || error 'Invalid template: all lines should have the same length'
+
+    if [ "$line_length" == 0 ]
+    then
+      error 'Invalid template: empty lines are not allowed'
+    fi
+
+    if [ "$line_length" != "$max_line_length" ]
+    then
+      error 'Invalid template: all lines should have the same length'
+    fi
   done < <( echo "$trimmed_template" )
 }
 
@@ -182,7 +194,10 @@ validate_inputs()
   [ -d "$REPOSITORY" ] || error 'Invalid repository path: non existing folder'
   [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
 
-  [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]] || error 'Invalid color multiplier: non strictly positive integer'
+  if ! [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]]
+  then
+    error 'Invalid color multiplier: non strictly positive integer'
+  fi
 
   validate_template
 }
