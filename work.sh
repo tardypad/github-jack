@@ -7,6 +7,7 @@ init_variables()
   COLOR_MULTIPLIER=2
   EMAIL='jack@work.com'
   FORCE=false
+  KEEP=false
   MESSAGE='All work and no play makes Jack a dull boy.'
   NAME='Jack'
   REPOSITORY=.
@@ -37,6 +38,7 @@ OPTIONAL ARGUMENTS:
    --email, -e      VALUE   define worker email
    --force, -f              don't ask for any confirmation
    --help, -h               show this message only
+   --keep, -k               don't reset the work repository
    --message, -m    VALUE   define work message
    --name, -n       VALUE   define worker name
    --repository, -r FOLDER  define work repository
@@ -71,24 +73,27 @@ reset_work()
 {
   if [ -d "$REPOSITORY" ]
   then
-    local repository_name=$( basename $( readlink -f "$REPOSITORY" ) )
-
-    if ! $FORCE && \
-      ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] )
+    if ! $KEEP
     then
-      while true; do
-        read -p "Confirm the reset of that \"$repository_name\" repository work? "
-        case $REPLY in
-            yes|y) break;;
-            no|n) exit;;
-            *) echo "Please answer yes or no.";;
-        esac
-      done
-    fi
+      local repository_name=$( basename $( readlink -f "$REPOSITORY" ) )
 
-    info "Resetting $repository_name work repository"
-    rm -rf "$REPOSITORY/.git"
-    [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
+      if ! $FORCE && \
+        ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] )
+      then
+        while true; do
+          read -p "Confirm the reset of that \"$repository_name\" repository work? "
+          case $REPLY in
+              yes|y) break;;
+              no|n) exit;;
+              *) echo "Please answer yes or no.";;
+          esac
+        done
+      fi
+
+      info "Resetting $repository_name work repository"
+      rm -rf "$REPOSITORY/.git"
+      [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
+    fi
   else
     info "Creating $REPOSITORY work repository"
     mkdir -p "$REPOSITORY"
@@ -242,6 +247,10 @@ parse_inputs()
       ;;
     --help|-h)
       usage
+      ;;
+    --keep|-k)
+      KEEP=true
+      shift
       ;;
     --message|-m)
       [ -n "$2" ] || error 'Missing message value'
