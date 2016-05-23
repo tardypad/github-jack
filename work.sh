@@ -7,7 +7,7 @@ EMAIL='jack@work.com'
 FORCE=false
 MESSAGE='All work and no play makes Jack a dull boy.'
 NAME='Jack'
-REPOSITORY=
+REPOSITORY=.
 TEMPLATE="$SCRIPT_DIR/templates/jack"
 VERBOSE=false
 WRITE_FILE=
@@ -20,9 +20,6 @@ Usage: $( basename $0 ) [ARGUMENT]...
 
 Generate the work to be displayed on Github's contributions board
 
-REQUIRED ARGUMENTS:
-   --repository, -r FOLDER  define work repository
-
 OPTIONAL ARGUMENTS:
    --color, -c      INT     define work multiplier to adjust color shades
    --email, -e      VALUE   define worker email
@@ -30,11 +27,13 @@ OPTIONAL ARGUMENTS:
    --help, -h               show this message only
    --message, -m    VALUE   define work message
    --name, -n       VALUE   define worker name
+   --repository, -r FOLDER  define work repository
    --template, -t   FILE    define work template
    --verbose, -v            verbose mode
    --write, -w      VALUE   write work message into repository file
 
 DEFAULT VALUES:
+   work repository          current folder
    work template            $SCRIPT_DIR/templates/jack
    worker name              Jack
    worker email             jack@work.com
@@ -62,8 +61,10 @@ reset_work()
   then
     if ! $FORCE
     then
+      local repository_name=$( basename $( readlink -f "$REPOSITORY" ) )
+
       while true; do
-        read -p "Confirm the reset of that repository work? "
+        read -p "Confirm the reset of that \"$repository_name\" repository work? "
         case $REPLY in
             yes|y) break;;
             no|n) exit;;
@@ -195,8 +196,6 @@ validate_template()
 
 validate_inputs()
 {
-  [ -n "$REPOSITORY" ] || error 'Missing repository argument'
-
   [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
 
   if ! [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]]
