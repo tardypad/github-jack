@@ -6,7 +6,6 @@ Testing:
 different current day / leap year
 
 Improvements:
-use user config to define worker name and email
 Add README
 
 New Features:
