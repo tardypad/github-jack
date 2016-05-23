@@ -58,19 +58,25 @@ info()
 
 reset_work()
 {
-  if ! $FORCE
+  if [ -d "$REPOSITORY" ]
   then
-    while true; do
-      read -p "Confirm the reset of that repository work? "
-      case $REPLY in
-          yes|y) break;;
-          no|n) exit;;
-          *) echo "Please answer yes or no.";;
-      esac
-    done
+    if ! $FORCE
+    then
+      while true; do
+        read -p "Confirm the reset of that repository work? "
+        case $REPLY in
+            yes|y) break;;
+            no|n) exit;;
+            *) echo "Please answer yes or no.";;
+        esac
+      done
+    fi
+  else
+    mkdir -p "$REPOSITORY"
   fi
 
   [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
+
   rm -rf "$REPOSITORY/.git"
   git --git-dir="$REPOSITORY/.git" --work-tree="$REPOSITORY" init --quiet
 }
@@ -191,7 +197,6 @@ validate_inputs()
 {
   [ -n "$REPOSITORY" ] || error 'Missing repository argument'
 
-  [ -d "$REPOSITORY" ] || error 'Invalid repository path: non existing folder'
   [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
 
   if ! [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]]
