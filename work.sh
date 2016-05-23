@@ -1,27 +1,29 @@
 #!/bin/bash
 
-SCRIPT_DIR=$( dirname "$( readlink -f "$0" )" )
+init_variables()
+{
+  SCRIPT_DIR=$( dirname "$( readlink -f "$0" )" )
 
-COLOR_MULTIPLIER=2
-EMAIL='jack@work.com'
-FORCE=false
-MESSAGE='All work and no play makes Jack a dull boy.'
-NAME='Jack'
-REPOSITORY=.
-TEMPLATE="$SCRIPT_DIR/templates/jack"
-VERBOSE=false
-WRITE_FILE=
+  COLOR_MULTIPLIER=2
+  EMAIL='jack@work.com'
+  FORCE=false
+  MESSAGE='All work and no play makes Jack a dull boy.'
+  NAME='Jack'
+  REPOSITORY=.
+  TEMPLATE="$SCRIPT_DIR/templates/jack"
+  VERBOSE=false
+  WRITE_FILE=
 
-if git config --global --includes user.name &> /dev/null
-then
-  NAME=$( git config --global --includes user.name )
-fi
+  if git config --global --includes user.name &> /dev/null
+  then
+    NAME=$( git config --global --includes user.name )
+  fi
 
-if git config --global --includes user.email &> /dev/null
-then
-  EMAIL=$( git config --global --includes user.email )
-fi
-
+  if git config --global --includes user.email &> /dev/null
+  then
+    EMAIL=$( git config --global --includes user.email )
+  fi
+}
 
 usage()
 {
@@ -277,6 +279,8 @@ parse_inputs()
   done
 }
 
+
+init_variables
 
 parse_inputs "$@"
 validate_inputs
