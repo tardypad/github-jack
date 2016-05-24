@@ -102,7 +102,7 @@ init_work()
     mkdir -p "$REPOSITORY"
   fi
 
-  git --git-dir="$REPOSITORY/.git" --work-tree="$REPOSITORY" init --quiet
+  git --git-dir "$REPOSITORY/.git" --work-tree "$REPOSITORY" init --quiet
 }
 
 day_count()
@@ -124,13 +124,13 @@ start_date()
 commit_work()
 {
   local date_format='%Y-%m-%d'
-  local start_date="$( date --date="$( start_date )" +$date_format )"
+  local start_date="$( date --date "$( start_date )" +$date_format )"
   local days=$(( $( wc --max-line-length < "$TEMPLATE" ) * 7 ))
   local date count
 
   for (( c = 0; c < "$days"; c++ ))
   do
-    date=$( date --date="$start_date +$c day" +$date_format )
+    date=$( date --date "$start_date +$c day" +$date_format )
     count=$( day_count $c )
     commit_day_work "$date" "$count"
   done
@@ -173,15 +173,15 @@ commit_a_work()
   then
     echo "$MESSAGE" >> "$REPOSITORY/$WRITE_FILE"
     git \
-    --git-dir="$REPOSITORY/.git" \
-    --work-tree="$REPOSITORY" \
+    --git-dir "$REPOSITORY/.git" \
+    --work-tree "$REPOSITORY" \
     add \
     "$WRITE_FILE"
   fi
 
   git \
-  --git-dir="$REPOSITORY/.git" \
-  --work-tree="$REPOSITORY" \
+  --git-dir "$REPOSITORY/.git" \
+  --work-tree "$REPOSITORY" \
   commit \
   --allow-empty \
   --message "$MESSAGE" \
@@ -232,7 +232,7 @@ validate_inputs()
     error 'Invalid color multiplier: non strictly positive integer'
   fi
 
-  if ! date --date="$START" &> /dev/null
+  if ! date --date "$START" &> /dev/null
   then
     error 'Invalid start date'
   fi
