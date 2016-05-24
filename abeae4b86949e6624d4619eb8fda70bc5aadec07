@@ -9,8 +9,10 @@ Improvements:
 Add README
 
 New Features:
-option to define value to fill days outside the template
 option to select start day of template
 option to center template
 
 Discarded:
+- option to define value to fill days outside the template
+  no meaning in case the the template is larger than one year
+  and can be easily done for smaller templates by increasing their size
