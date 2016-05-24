@@ -3,14 +3,16 @@ Cleaning:
 Bugs:
 
 Testing:
-different current day / leap year
+- different current day / leap year
 
 Improvements:
-Add README
+- Add README
 
 New Features:
-option to select start day of template
-option to center template
+- option to select start day of template
+- option to center template
+- automatically calculate multiplier by looking at user contributions
+  as done by https://github.com/gelstudios/gitfiti/blob/master/gitfiti.py
 
 Discarded:
 - option to define value to fill days outside the template
