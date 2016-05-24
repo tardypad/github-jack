@@ -12,7 +12,7 @@ init_variables()
   NAME='Jack'
   REPOSITORY=.
   START='-1 year'
-  TEMPLATE="$SCRIPT_DIR/templates/jack"
+  TEMPLATE="jack"
   VERBOSE=false
   WRITE_FILE=
 
@@ -44,13 +44,17 @@ OPTIONAL ARGUMENTS:
    --name, -n       VALUE   define worker name
    --repository, -r FOLDER  define work repository
    --start, -s      DATE    define work start day
-   --template, -t   FILE    define work template
+   --template, -t   VALUE   define work template (file or identifier)
    --verbose, -v            verbose mode
    --write, -w      VALUE   write work message into repository file
 
+PROVIDED TEMPLATES IDENTIFIER:
+   In $SCRIPT_DIR/templates/ folder:
+$( find "$SCRIPT_DIR/templates/" -type f -printf '   - %f\n' )
+
 DEFAULT VALUES:
    work repository          current folder
-   work template            $SCRIPT_DIR/templates/jack
+   work template            jack
    work start day           1 year ago
    worker name              user global git name (Jack if not defined)
    worker email             user global git email (jack@work.com if not defined)
@@ -225,7 +229,17 @@ validate_template()
 
 validate_inputs()
 {
-  [ -f "$TEMPLATE" ] || error 'Invalid template path: non existing file'
+  if [ ! -f "$TEMPLATE" ]
+  then
+    local provided_template="$SCRIPT_DIR/templates/$TEMPLATE"
+
+    if [ -f "$provided_template" ]
+    then
+      TEMPLATE="$provided_template"
+    else
+      error 'Invalid template value: non existing file or invalid identifier'
+    fi
+  fi
 
   if ! [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]]
   then
