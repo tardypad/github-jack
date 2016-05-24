@@ -10,7 +10,6 @@ Improvements:
 
 New Features:
 - option to position template left/center/right
-- use provided templates with only name (not path)
 - automatically calculate multiplier by looking at user contributions
   as done by https://github.com/gelstudios/gitfiti/blob/master/gitfiti.py
 
