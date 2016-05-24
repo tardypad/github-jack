@@ -69,7 +69,7 @@ info()
   "$VERBOSE" && [ -n "$1" ] && echo "$1"
 }
 
-reset_work()
+init_work()
 {
   if [ -d "$REPOSITORY" ]
   then
@@ -294,7 +294,7 @@ init_variables
 parse_inputs "$@"
 validate_inputs
 
-reset_work
+init_work
 commit_work
 
 info "$MESSAGE"
