@@ -1,6 +1,7 @@
 Cleaning:
 
 Bugs:
+left/center/right is not precise with half/full weeks display
 
 Testing:
 
@@ -8,7 +9,6 @@ Improvements:
 - Add README
 
 New Features:
-- option to position template left/center/right
 - automatically calculate multiplier by looking at user contributions
   as done by https://github.com/gelstudios/gitfiti/blob/master/gitfiti.py
 
