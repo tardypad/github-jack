@@ -61,7 +61,7 @@ DEFAULT VALUES:
    work message             All work and no play makes Jack a dull boy.
    color multiplier         2
 EOF
-  exit
+  exit 0
 }
 
 error()
@@ -91,7 +91,7 @@ init_work()
           read -p "Confirm the reset of that \"$repository_name\" repository work? "
           case $REPLY in
               yes|y) break;;
-              no|n) exit;;
+              no|n) exit 0;;
               *) echo "Please answer yes or no.";;
           esac
         done
@@ -349,3 +349,5 @@ init_work
 commit_work
 
 info "$MESSAGE"
+
+exit 0
