@@ -35,18 +35,18 @@ Usage: $( basename $0 ) [ARGUMENT]...
 Generate the work to be displayed on Github's contributions board
 
 OPTIONAL ARGUMENTS:
-   --color, -c      INT     define work multiplier to adjust color shades
-   --email, -e      VALUE   define worker email
-   --force, -f              don't ask for any confirmation
-   --help, -h               show this message only
-   --keep, -k               don't reset the work repository
-   --message, -m    VALUE   define work message
-   --name, -n       VALUE   define worker name
-   --repository, -r FOLDER  define work repository
-   --start, -s      VALUE   define work start (date or position)
-   --template, -t   VALUE   define work template (file or identifier)
-   --verbose, -v            verbose mode
-   --write, -w      VALUE   write work message into repository file
+   --color, -c       INT       define work multiplier to adjust color shades
+   --email, -e       VALUE     define worker email
+   --force, -f                 don't ask for any confirmation
+   --help, -h                  show this message only
+   --keep, -k                  don't reset the work repository
+   --message, -m     VALUE     define work message
+   --name, -n        VALUE     define worker name
+   --repository, -r  FOLDER    define work repository
+   --start, -s       DATE/POS  define work start
+   --template, -t    FILE/ID   define work template
+   --verbose, -v               verbose mode
+   --write, -w       VALUE     write work message into repository file
 
 PROVIDED TEMPLATES IDENTIFIER:
    In $SCRIPT_DIR/templates/ folder:
