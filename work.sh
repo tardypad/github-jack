@@ -11,7 +11,7 @@ init_variables()
   MESSAGE='All work and no play makes Jack a dull boy.'
   NAME='Jack'
   REPOSITORY=.
-  START='-1 year'
+  START='left'
   TEMPLATE="jack"
   VERBOSE=false
   WRITE_FILE=
@@ -43,7 +43,7 @@ OPTIONAL ARGUMENTS:
    --message, -m    VALUE   define work message
    --name, -n       VALUE   define worker name
    --repository, -r FOLDER  define work repository
-   --start, -s      DATE    define work start day
+   --start, -s      VALUE   define work start (date or position)
    --template, -t   VALUE   define work template (file or identifier)
    --verbose, -v            verbose mode
    --write, -w      VALUE   write work message into repository file
@@ -55,7 +55,7 @@ $( find "$SCRIPT_DIR/templates/" -type f -printf '   - %f\n' )
 DEFAULT VALUES:
    work repository          current folder
    work template            jack
-   work start day           1 year ago
+   work start               left
    worker name              user global git name (Jack if not defined)
    worker email             user global git email (jack@work.com if not defined)
    work message             All work and no play makes Jack a dull boy.
@@ -121,6 +121,11 @@ day_count()
 
 start_date()
 {
+  if [ "$START" == 'left' ]
+  then
+    START='-1 year'
+  fi
+
   local start="$( echo "$START" | sed "s/ /\\\ /" )"
   echo "$start"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
 }
@@ -246,9 +251,10 @@ validate_inputs()
     error 'Invalid color multiplier: non strictly positive integer'
   fi
 
-  if ! date --date "$START" &> /dev/null
+  if ! date --date "$START" &> /dev/null \
+     && [ "$START" != 'left' ]
   then
-    error 'Invalid start date'
+    error 'Invalid start date or position'
   fi
 
   validate_template
