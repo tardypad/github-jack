@@ -124,9 +124,19 @@ start_date()
   if [ "$START" == 'left' ]
   then
     START='-1 year'
+  else
+    local template_cols=$( wc --max-line-length < "$TEMPLATE" )
+
+    if [ "$START" == 'center' ]
+    then
+      START="-53 weeks $(( (53 - $template_cols)/2 )) weeks"
+    elif [ "$START" == 'right' ]
+    then
+      START="-$template_cols weeks"
+    fi
   fi
 
-  local start="$( echo "$START" | sed "s/ /\\\ /" )"
+  local start="$( echo "$START" | sed "s/ /\\\ /g" )"
   echo "$start"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
 }
 
@@ -252,7 +262,9 @@ validate_inputs()
   fi
 
   if ! date --date "$START" &> /dev/null \
-     && [ "$START" != 'left' ]
+     && [ "$START" != 'left' ] \
+     && [ "$START" != 'center' ] \
+     && [ "$START" != 'right' ]
   then
     error 'Invalid start date or position'
   fi
