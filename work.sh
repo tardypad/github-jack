@@ -36,35 +36,35 @@ Usage: $( basename $0 ) [ARGUMENT]...
 Generate the work to be displayed on Github's contributions board
 
 OPTIONAL ARGUMENTS:
-   --color, -c       INT       multiply work to adjust color shades
-   --email, -e       VALUE     define worker email
-   --force, -f                 don't ask for any confirmation
-   --help, -h                  show this message only
-   --keep, -k                  don't reset the work repository
-   --message, -m     VALUE     define work message
-   --name, -n        VALUE     define worker name
-   --repository, -r  FOLDER    define work repository
-   --start, -s       DATE/POS  define work start
-   --template, -t    FILE/ID   define work template
-   --username, -u    VALUE     define github username to calculate multiplier
-   --verbose, -v               verbose mode
-   --write, -w       VALUE     write work message into repository file
+  --color, -c       INT       multiply work to adjust color shades
+  --email, -e       VALUE     define worker email
+  --force, -f                 don't ask for any confirmation
+  --help, -h                  show this message only
+  --keep, -k                  don't reset the work repository
+  --message, -m     VALUE     define work message
+  --name, -n        VALUE     define worker name
+  --repository, -r  FOLDER    define work repository
+  --start, -s       DATE/POS  define work start
+  --template, -t    FILE/ID   define work template
+  --username, -u    VALUE     define github username to calculate multiplier
+  --verbose, -v               verbose mode
+  --write, -w       VALUE     write work message into repository file
 
 PROVIDED TEMPLATES IDENTIFIER:
-   In $SCRIPT_DIR/templates/ folder:
+  In $SCRIPT_DIR/templates/ folder:
 $( find "$SCRIPT_DIR/templates/" -type f -printf '   - %f\n' )
 
 DEFAULT VALUES:
-   work repository          current folder
-   work template            jack
-   work start               left
-   worker name              user global git name (Jack if not defined)
-   worker email             user global git email (jack@work.com if not defined)
-   work message             All work and no play makes Jack a dull boy.
+  work repository    current folder
+  work template      jack
+  work start         left
+  worker name        user global git name (Jack if not defined)
+  worker email       user global git email (jack@work.com if not defined)
+  work message       All work and no play makes Jack a dull boy.
 
 NOTES
-   - In case both username and color arguments are provided, the multiplier
-     calculated from the Github profile takes precedence
+  - In case both username and color arguments are provided, the multiplier
+    calculated from the Github profile takes precedence
 EOF
   exit 0
 }
