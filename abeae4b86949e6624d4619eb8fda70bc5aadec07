@@ -10,8 +10,6 @@ Improvements:
 - describe possible positions in usage
 
 New Features:
-- automatically calculate multiplier by looking at user contributions
-  as done by https://github.com/gelstudios/gitfiti/blob/master/gitfiti.py
 - add option to start after last commit of the work repo (imply keep or not?)
 
 Discarded:
