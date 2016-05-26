@@ -313,14 +313,14 @@ parse_inputs()
       REPOSITORY="$2"
       shift 2
       ;;
-    --template|-t)
-      [ -n "$2" ] || error 'Missing template path'
-      TEMPLATE="$2"
-      shift 2
-      ;;
     --start|-s)
       [ -n "$2" ] || error 'Missing start date'
       START="$2"
+      shift 2
+      ;;
+    --template|-t)
+      [ -n "$2" ] || error 'Missing template path'
+      TEMPLATE="$2"
       shift 2
       ;;
     --verbose|-v)
