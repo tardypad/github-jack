@@ -4,7 +4,7 @@ init_variables()
 {
   SCRIPT_DIR=$( dirname "$( readlink -f "$0" )" )
 
-  COLOR_MULTIPLIER=2
+  COLOR_MULTIPLIER=1
   EMAIL='jack@work.com'
   FORCE=false
   KEEP=false
@@ -36,7 +36,7 @@ Usage: $( basename $0 ) [ARGUMENT]...
 Generate the work to be displayed on Github's contributions board
 
 OPTIONAL ARGUMENTS:
-   --color, -c       INT       define work multiplier to adjust color shades
+   --color, -c       INT       multiply work to adjust color shades
    --email, -e       VALUE     define worker email
    --force, -f                 don't ask for any confirmation
    --help, -h                  show this message only
@@ -61,7 +61,6 @@ DEFAULT VALUES:
    worker name              user global git name (Jack if not defined)
    worker email             user global git email (jack@work.com if not defined)
    work message             All work and no play makes Jack a dull boy.
-   color multiplier         2
 
 NOTES
    - In case both username and color arguments are provided, the multiplier
