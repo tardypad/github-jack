@@ -38,16 +38,16 @@ Generate the work to be displayed on Github's contributions board
 OPTIONAL ARGUMENTS:
   --color, -c       INT       multiply work to adjust color shades
   --email, -e       VALUE     define worker email
-  --force, -f                 don't ask for any confirmation
+  --force, -f                 skip any confirmation question
   --help, -h                  show this message only
-  --keep, -k                  don't reset the work repository
+  --keep, -k                  skip the reset of the work repository
   --message, -m     VALUE     define work message
   --name, -n        VALUE     define worker name
   --repository, -r  FOLDER    define work repository
   --start, -s       DATE/POS  define work start
   --template, -t    FILE/ID   define work template
-  --username, -u    VALUE     define github username to calculate multiplier
-  --verbose, -v               verbose mode
+  --username, -u    VALUE     calculate multiplier from user github profile
+  --verbose, -v               enable verbose mode
   --write, -w       VALUE     write work message into repository file
 
 PROVIDED TEMPLATES IDENTIFIER:
