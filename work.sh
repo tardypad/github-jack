@@ -5,26 +5,26 @@ init_variables()
   SCRIPT_DIR=$( dirname "$( readlink --canonicalize "$0" )" )
 
   COLOR_MULTIPLIER=1
-  EMAIL='jack@work.com'
+  AUTHOR_EMAIL='jack@work.com'
   FORCE=false
   KEEP=false
   MESSAGE='All work and no play makes Jack a dull boy.'
-  NAME='Jack'
+  AUTHOR_NAME='Jack'
   REPOSITORY=.
   START='left'
   TEMPLATE="jack"
-  USERNAME=
+  GITHUB_USERNAME=
   VERBOSE=false
   WRITE_FILE=
 
   if git config --global --includes user.name &> /dev/null
   then
-    NAME=$( git config --global --includes user.name )
+    AUTHOR_NAME=$( git config --global --includes user.name )
   fi
 
   if git config --global --includes user.email &> /dev/null
   then
-    EMAIL=$( git config --global --includes user.email )
+    AUTHOR_EMAIL=$( git config --global --includes user.email )
   fi
 }
 
@@ -116,10 +116,10 @@ init_work()
 
 define_multiplier()
 {
-  if [ -n "$USERNAME" ]
+  if [ -n "$GITHUB_USERNAME" ]
   then
     local count=$(
-      curl --silent "https://github.com/$USERNAME" \
+      curl --silent "https://github.com/$GITHUB_USERNAME" \
       | grep data-count \
       | grep '#1e6823' \
       | sed --regexp-extended 's/.* data-count="([0-9]+)" .*/\1/' \
@@ -231,7 +231,7 @@ commit_a_work()
   commit \
   --allow-empty \
   --message "$MESSAGE" \
-  --author "$NAME <$EMAIL>" \
+  --author "$AUTHOR_NAME <$AUTHOR_EMAIL>" \
   --date "$date $time" \
   --quiet
 }
@@ -296,8 +296,8 @@ validate_inputs()
     error 'Invalid start date or position'
   fi
 
-  if [ -n "$USERNAME" ] \
-     && ! curl --silent "https://api.github.com/users/$USERNAME" \
+  if [ -n "$GITHUB_USERNAME" ] \
+     && ! curl --silent "https://api.github.com/users/$GITHUB_USERNAME" \
           | grep --quiet '"type": "User"'
   then
     error 'Invalid username: non existing user profile'
@@ -318,7 +318,7 @@ parse_inputs()
       ;;
     --email|-e)
       [ -n "$2" ] || error 'Missing email value'
-      EMAIL="$2"
+      AUTHOR_EMAIL="$2"
       shift 2
       ;;
     --force|-f)
@@ -339,7 +339,7 @@ parse_inputs()
       ;;
     --name|-n)
       [ -n "$2" ] || error 'Missing name value'
-      NAME="$2"
+      AUTHOR_NAME="$2"
       shift 2
       ;;
     --repository|-r)
@@ -359,7 +359,7 @@ parse_inputs()
       ;;
     --username|-u)
       [ -n "$2" ] || error 'Missing username value'
-      USERNAME="$2"
+      GITHUB_USERNAME="$2"
       shift 2
       ;;
     --verbose|-v)
