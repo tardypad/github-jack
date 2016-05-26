@@ -2,7 +2,7 @@
 
 init_variables()
 {
-  SCRIPT_DIR=$( dirname "$( readlink -f "$0" )" )
+  SCRIPT_DIR=$( dirname "$( readlink --canonicalize "$0" )" )
 
   COLOR_MULTIPLIER=1
   EMAIL='jack@work.com'
@@ -87,7 +87,7 @@ init_work()
   then
     if ! $KEEP
     then
-      local name=$( basename $( readlink -f "$REPOSITORY" ) )
+      local name=$( basename $( readlink --canonicalize "$REPOSITORY" ) )
 
       if ! $FORCE && \
         ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] )
@@ -108,7 +108,7 @@ init_work()
     fi
   else
     info "Creating $REPOSITORY work repository"
-    mkdir -p "$REPOSITORY"
+    mkdir --parents "$REPOSITORY"
   fi
 
   git --git-dir "$REPOSITORY/.git" --work-tree "$REPOSITORY" init --quiet
@@ -122,7 +122,7 @@ define_multiplier()
       curl --silent "https://github.com/$USERNAME" \
       | grep data-count \
       | grep '#1e6823' \
-      | sed -r 's/.* data-count="([0-9]+)" .*/\1/' \
+      | sed --regexp-extended 's/.* data-count="([0-9]+)" .*/\1/' \
       | sort --unique --general-numeric-sort \
       | head --lines 1
     )
@@ -137,10 +137,10 @@ day_count()
   local row=$(( $day_number % 7 + 1 ))
   local col=$(( $day_number / 7 + 1 ))
   local index=$( \
-    head "$TEMPLATE" -n $row \
-    | tail -n1 \
-    | head -c $col \
-    | tail -c1
+    head "$TEMPLATE" --lines $row \
+    | tail --lines 1 \
+    | head --bytes $col \
+    | tail --bytes 1
   )
 
   echo $(( $index * $COLOR_MULTIPLIER ))
