@@ -13,6 +13,7 @@ init_variables()
   REPOSITORY=.
   START='left'
   TEMPLATE="jack"
+  USERNAME=
   VERBOSE=false
   WRITE_FILE=
 
@@ -45,6 +46,7 @@ OPTIONAL ARGUMENTS:
    --repository, -r  FOLDER    define work repository
    --start, -s       DATE/POS  define work start
    --template, -t    FILE/ID   define work template
+   --username, -u    VALUE     define github username to calculate multiplier
    --verbose, -v               verbose mode
    --write, -w       VALUE     write work message into repository file
 
@@ -60,6 +62,10 @@ DEFAULT VALUES:
    worker email             user global git email (jack@work.com if not defined)
    work message             All work and no play makes Jack a dull boy.
    color multiplier         2
+
+NOTES
+   - In case both username and color arguments are provided, the multiplier
+     calculated from the Github profile takes precedence
 EOF
   exit 0
 }
@@ -107,6 +113,23 @@ init_work()
   fi
 
   git --git-dir "$REPOSITORY/.git" --work-tree "$REPOSITORY" init --quiet
+}
+
+define_multiplier()
+{
+  if [ -n "$USERNAME" ]
+  then
+    local count=$(
+      curl --silent "https://github.com/$USERNAME" \
+      | grep data-count \
+      | grep '#1e6823' \
+      | sed -r 's/.* data-count="([0-9]+)" .*/\1/' \
+      | sort --unique --general-numeric-sort \
+      | head --lines 1
+    )
+    [[ "$count" -gt 0 ]] || count=1
+    COLOR_MULTIPLIER=$( printf %0.f $( echo "$count / 4" | bc --mathlib ) )
+  fi
 }
 
 day_count()
@@ -269,6 +292,13 @@ validate_inputs()
     error 'Invalid start date or position'
   fi
 
+  if [ -n "$USERNAME" ] \
+     && ! curl --silent "https://api.github.com/users/$USERNAME" \
+          | grep --quiet '"type": "User"'
+  then
+    error 'Invalid username: non existing user profile'
+  fi
+
   validate_template
 }
 
@@ -323,6 +353,11 @@ parse_inputs()
       TEMPLATE="$2"
       shift 2
       ;;
+    --username|-u)
+      [ -n "$2" ] || error 'Missing username value'
+      USERNAME="$2"
+      shift 2
+      ;;
     --verbose|-v)
       VERBOSE=true
       shift
@@ -345,6 +380,7 @@ init_variables
 parse_inputs "$@"
 validate_inputs
 
+define_multiplier
 init_work
 commit_work
 
