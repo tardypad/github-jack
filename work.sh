@@ -87,13 +87,13 @@ init_work()
   then
     if ! $KEEP
     then
-      local repository_name=$( basename $( readlink -f "$REPOSITORY" ) )
+      local name=$( basename $( readlink -f "$REPOSITORY" ) )
 
       if ! $FORCE && \
         ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] )
       then
         while true; do
-          read -p "Confirm the reset of that \"$repository_name\" repository work? "
+          read -p "Confirm the reset of that \"$name\" repository work? "
           case $REPLY in
               yes|y) break;;
               no|n) exit 0;;
@@ -102,7 +102,7 @@ init_work()
         done
       fi
 
-      info "Resetting $repository_name work repository"
+      info "Resetting $name work repository"
       rm -rf "$REPOSITORY/.git"
       [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
     fi
@@ -136,7 +136,12 @@ day_count()
   local day_number="$1"
   local row=$(( $day_number % 7 + 1 ))
   local col=$(( $day_number / 7 + 1 ))
-  local index=$( head "$TEMPLATE" -n $row | tail -n1 | head -c $col | tail -c1 )
+  local index=$( \
+    head "$TEMPLATE" -n $row \
+    | tail -n1 \
+    | head -c $col \
+    | tail -c1
+  )
 
   echo $(( $index * $COLOR_MULTIPLIER ))
 }
