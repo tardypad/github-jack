@@ -238,6 +238,18 @@ commit_a_work()
 
 validate_template()
 {
+  if [ ! -f "$TEMPLATE" ]
+  then
+    local provided_template="$SCRIPT_DIR/templates/$TEMPLATE"
+
+    if [ -f "$provided_template" ]
+    then
+      TEMPLATE="$provided_template"
+    else
+      error 'Invalid template value: non existing file or invalid identifier'
+    fi
+  fi
+
   if [ $( tr --delete 01234'\n' < "$TEMPLATE" | wc --chars ) != 0 ]
   then
     error 'Invalid template: should contain only integers 0 to 4 and newlines'
@@ -269,25 +281,18 @@ validate_template()
   done < <( echo "$trimmed_template" )
 }
 
-validate_inputs()
+validate_github_username()
 {
-  if [ ! -f "$TEMPLATE" ]
+  if [ -n "$GITHUB_USERNAME" ] \
+     && ! curl --silent "https://api.github.com/users/$GITHUB_USERNAME" \
+          | grep --quiet '"type": "User"'
   then
-    local provided_template="$SCRIPT_DIR/templates/$TEMPLATE"
-
-    if [ -f "$provided_template" ]
-    then
-      TEMPLATE="$provided_template"
-    else
-      error 'Invalid template value: non existing file or invalid identifier'
-    fi
+    error 'Invalid username: non existing user profile'
   fi
+}
 
-  if ! [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]]
-  then
-    error 'Invalid color multiplier: non strictly positive integer'
-  fi
-
+validate_start()
+{
   if ! date --date "$START" &> /dev/null \
      && [ "$START" != 'left' ] \
      && [ "$START" != 'center' ] \
@@ -295,14 +300,21 @@ validate_inputs()
   then
     error 'Invalid start date or position'
   fi
+}
 
-  if [ -n "$GITHUB_USERNAME" ] \
-     && ! curl --silent "https://api.github.com/users/$GITHUB_USERNAME" \
-          | grep --quiet '"type": "User"'
+validate_color_multiplier()
+{
+  if ! [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]]
   then
-    error 'Invalid username: non existing user profile'
+    error 'Invalid color multiplier: non strictly positive integer'
   fi
+}
 
+validate_inputs()
+{
+  validate_start
+  validate_github_username
+  validate_color_multiplier
   validate_template
 }
 
