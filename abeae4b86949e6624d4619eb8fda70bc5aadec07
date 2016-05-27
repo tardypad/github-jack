@@ -8,6 +8,7 @@ Testing:
 
 Improvements:
 - Add README
+- Add LICENSE
 
 New Features:
 - add option to start after last commit of the work repo (imply keep or not?)
