@@ -8,7 +8,6 @@ Testing:
 
 Improvements:
 - Add README
-- describe possible positions in usage
 
 New Features:
 - add option to start after last commit of the work repo (imply keep or not?)
