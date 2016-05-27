@@ -50,6 +50,11 @@ PROVIDED TEMPLATES IDENTIFIER:
   In $SCRIPT_DIR/templates/ folder:
 $( find "$SCRIPT_DIR/templates/" -type f -printf '   - %f\n' )
 
+WORK TEMPLATE POSITIONS:
+  left      work starts on the left side of the board
+  center    work is centered on the board
+  right     work ends on the right side of the board
+
 DEFAULT VALUES:
   work repository    current folder
   work template      jack
