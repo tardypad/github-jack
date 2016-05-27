@@ -17,3 +17,6 @@ Discarded:
 - option to define value to fill days outside the template
   no meaning in case the the template is larger than one year
   and can be easily done for smaller templates by increasing their size
+- combine color and username options (same shade multiplier purpose)
+  github usernames can be integers too and thus we wouldn't be able to
+  differentiate them
