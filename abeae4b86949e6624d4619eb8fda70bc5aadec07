@@ -7,8 +7,10 @@ left/center/right is not precise with half/full weeks display
 Testing:
 
 Improvements:
+- follow https://google.github.io/styleguide/shell.xml
 - Add README
 - Add LICENSE
+- autocomplete (for templates and positions)
 
 New Features:
 - add option to start after last commit of the work repo (imply keep or not?)
