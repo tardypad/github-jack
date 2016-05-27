@@ -22,3 +22,6 @@ Discarded:
 - combine color and username options (same shade multiplier purpose)
   github usernames can be integers too and thus we wouldn't be able to
   differentiate them
+
+Research:
+- use getopt or getopts for parsing inputs
