@@ -1,15 +1,15 @@
 init_variables()
 {
-  SHADE_MULTIPLIER=1
   AUTHOR_EMAIL='jack@work.com'
+  AUTHOR_NAME='Jack'
   FORCE=false
+  GITHUB_USERNAME=
   KEEP=false
   MESSAGE='All work and no play makes Jack a dull boy.'
-  AUTHOR_NAME='Jack'
-  REPOSITORY=.
   POSITION='left'
+  REPOSITORY=.
+  SHADE_MULTIPLIER=1
   TEMPLATE="jack"
-  GITHUB_USERNAME=
   VERBOSE=false
   WRITE_FILE=
 
