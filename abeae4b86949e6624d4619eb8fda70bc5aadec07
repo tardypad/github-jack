@@ -1,7 +1,6 @@
 Cleaning:
 - split into multiple files?
 - add comments for non self explicit parts
-- separate validate function for each one
 
 Bugs:
 left/center/right is not precise with half/full weeks display
