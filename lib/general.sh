@@ -114,7 +114,7 @@ parse_inputs()
       shift 2
       ;;
     --position|-p)
-      [ -n "$2" ] || error 'Missing position value'
+      [ -n "$2" ] || error 'Missing position start date or identifier'
       POSITION="$2"
       shift 2
       ;;
@@ -124,7 +124,7 @@ parse_inputs()
       shift 2
       ;;
     --template|-t)
-      [ -n "$2" ] || error 'Missing template path'
+      [ -n "$2" ] || error 'Missing template path or identifier'
       TEMPLATE="$2"
       shift 2
       ;;
