@@ -7,7 +7,7 @@ init_variables()
   MESSAGE='All work and no play makes Jack a dull boy.'
   AUTHOR_NAME='Jack'
   REPOSITORY=.
-  START='left'
+  POSITION='left'
   TEMPLATE="jack"
   GITHUB_USERNAME=
   VERBOSE=false
@@ -39,8 +39,8 @@ OPTIONAL ARGUMENTS:
   --keep, -k                  skip the reset of the work repository
   --message, -m     VALUE     define work message
   --name, -n        VALUE     define worker name
+  --position, -p    DATE/ID   define template position
   --repository, -r  FOLDER    define work repository
-  --start, -s       DATE/POS  define work start
   --template, -t    FILE/ID   define work template
   --username, -u    VALUE     calculate multiplier from user github profile
   --verbose, -v               enable verbose mode
@@ -53,7 +53,7 @@ $( find "$SCRIPT_DIR/templates/" -type f -printf '   - %f\n' )
 DEFAULT VALUES:
   work repository    current folder
   work template      jack
-  work start         left
+  work position      left
   worker name        user global git name (Jack if not defined)
   worker email       user global git email (jack@work.com if not defined)
   work message       All work and no play makes Jack a dull boy.
@@ -113,14 +113,14 @@ parse_inputs()
       AUTHOR_NAME="$2"
       shift 2
       ;;
+    --position|-p)
+      [ -n "$2" ] || error 'Missing position value'
+      POSITION="$2"
+      shift 2
+      ;;
     --repository|-r)
       [ -n "$2" ] || error 'Missing repository path'
       REPOSITORY="$2"
-      shift 2
-      ;;
-    --start|-s)
-      [ -n "$2" ] || error 'Missing start date'
-      START="$2"
       shift 2
       ;;
     --template|-t)
@@ -151,7 +151,7 @@ parse_inputs()
 
 validate_inputs()
 {
-  validate_start
+  validate_position
   validate_github_username
   validate_color_multiplier
   validate_template

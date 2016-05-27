@@ -65,22 +65,22 @@ day_count()
 
 start_date()
 {
-  if [ "$START" == 'left' ]
+  if [ "$POSITION" == 'left' ]
   then
-    START='-1 year'
+    POSITION='-1 year'
   else
     local template_cols=$( wc --max-line-length < "$TEMPLATE" )
 
-    if [ "$START" == 'center' ]
+    if [ "$POSITION" == 'center' ]
     then
-      START="-53 weeks $(( (53 - $template_cols)/2 )) weeks"
-    elif [ "$START" == 'right' ]
+      POSITION="-53 weeks $(( (53 - $template_cols)/2 )) weeks"
+    elif [ "$POSITION" == 'right' ]
     then
-      START="-$template_cols weeks"
+      POSITION="-$template_cols weeks"
     fi
   fi
 
-  local start="$( echo "$START" | sed "s/ /\\\ /g" )"
+  local start="$( echo "$POSITION" | sed "s/ /\\\ /g" )"
   echo "$start"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
 }
 

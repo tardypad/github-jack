@@ -1,11 +1,11 @@
-validate_start()
+validate_position()
 {
-  if ! date --date "$START" &> /dev/null \
-     && [ "$START" != 'left' ] \
-     && [ "$START" != 'center' ] \
-     && [ "$START" != 'right' ]
+  if ! date --date "$POSITION" &> /dev/null \
+     && [ "$POSITION" != 'left' ] \
+     && [ "$POSITION" != 'center' ] \
+     && [ "$POSITION" != 'right' ]
   then
-    error 'Invalid start date or position'
+    error 'Invalid position date or identifier'
   fi
 }
 
