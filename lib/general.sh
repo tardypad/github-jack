@@ -1,6 +1,6 @@
 init_variables()
 {
-  COLOR_MULTIPLIER=1
+  SHADE_MULTIPLIER=1
   AUTHOR_EMAIL='jack@work.com'
   FORCE=false
   KEEP=false
@@ -32,7 +32,6 @@ Usage: $( basename $0 ) [ARGUMENT]...
 Generate the work to be displayed on Github's contributions board
 
 OPTIONAL ARGUMENTS:
-  -c, --color       INT       multiply work to adjust color shades
   -e, --email       VALUE     define worker email
   -f. --force                 skip any confirmation question
   -g. --github      USERNAME  calculate multiplier from Github user profile
@@ -42,6 +41,7 @@ OPTIONAL ARGUMENTS:
   -n, --name        VALUE     define worker name
   -p, --position    DATE/ID   define template position
   -r, --repository  FOLDER    define work repository
+  -s, --shade       INT       multiply work to adjust color shades
   -t, --template    FILE/ID   define work template
   -v, --verbose               enable verbose mode
   -w, --write       VALUE     write work message into repository file
@@ -64,7 +64,7 @@ DEFAULT VALUES:
   work message       All work and no play makes Jack a dull boy.
 
 NOTES
-  - In case both the github and color arguments are provided, the multiplier
+  - In case both the github and shade arguments are provided, the multiplier
     calculated from the Github profile takes precedence
 EOF
   exit 0
@@ -87,11 +87,6 @@ parse_inputs()
   while [[ "$#" -gt 0 ]]
   do
     case "$1" in
-    --color|-c)
-      [ -n "$2" ] || error 'Missing color value'
-      COLOR_MULTIPLIER="$2"
-      shift 2
-      ;;
     --email|-e)
       [ -n "$2" ] || error 'Missing email value'
       AUTHOR_EMAIL="$2"
@@ -133,6 +128,11 @@ parse_inputs()
       REPOSITORY="$2"
       shift 2
       ;;
+    --shade|-s)
+      [ -n "$2" ] || error 'Missing shade multiplier'
+      SHADE_MULTIPLIER="$2"
+      shift 2
+      ;;
     --template|-t)
       [ -n "$2" ] || error 'Missing template path or identifier'
       TEMPLATE="$2"
@@ -158,6 +158,6 @@ validate_inputs()
 {
   validate_position
   validate_github_username
-  validate_color_multiplier
+  validate_shade_multiplier
   validate_template
 }

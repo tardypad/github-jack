@@ -44,7 +44,7 @@ define_multiplier()
       | head --lines 1
     )
     [[ "$count" -gt 0 ]] || count=1
-    COLOR_MULTIPLIER=$( printf %0.f $( echo "$count / 4" | bc --mathlib ) )
+    SHADE_MULTIPLIER=$( printf %0.f $( echo "$count / 4" | bc --mathlib ) )
   fi
 }
 
@@ -60,7 +60,7 @@ day_count()
     | tail --bytes 1
   )
 
-  echo $(( $index * $COLOR_MULTIPLIER ))
+  echo $(( $index * $SHADE_MULTIPLIER ))
 }
 
 start_date()

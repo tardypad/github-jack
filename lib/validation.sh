@@ -19,11 +19,11 @@ validate_github_username()
   fi
 }
 
-validate_color_multiplier()
+validate_shade_multiplier()
 {
-  if ! [[ $COLOR_MULTIPLIER =~ ^[1-9][0-9]* ]]
+  if ! [[ $SHADE_MULTIPLIER =~ ^[1-9][0-9]* ]]
   then
-    error 'Invalid color multiplier: non strictly positive integer'
+    error 'Invalid shade multiplier: non strictly positive integer'
   fi
 }
 
