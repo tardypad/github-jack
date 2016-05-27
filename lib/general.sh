@@ -35,6 +35,7 @@ OPTIONAL ARGUMENTS:
   -c, --color       INT       multiply work to adjust color shades
   -e, --email       VALUE     define worker email
   -f. --force                 skip any confirmation question
+  -g. --github      USERNAME  calculate multiplier from Github user profile
   -h, --help                  show this message only
   -k, --keep                  skip the reset of the work repository
   -m, --message     VALUE     define work message
@@ -42,7 +43,6 @@ OPTIONAL ARGUMENTS:
   -p, --position    DATE/ID   define template position
   -r, --repository  FOLDER    define work repository
   -t, --template    FILE/ID   define work template
-  -u. --username    VALUE     calculate multiplier from user github profile
   -v, --verbose               enable verbose mode
   -w, --write       VALUE     write work message into repository file
 
@@ -64,7 +64,7 @@ DEFAULT VALUES:
   work message       All work and no play makes Jack a dull boy.
 
 NOTES
-  - In case both username and color arguments are provided, the multiplier
+  - In case both the github and color arguments are provided, the multiplier
     calculated from the Github profile takes precedence
 EOF
   exit 0
@@ -101,6 +101,11 @@ parse_inputs()
       FORCE=true
       shift
       ;;
+    --github|-g)
+      [ -n "$2" ] || error 'Missing Github username'
+      GITHUB_USERNAME="$2"
+      shift 2
+      ;;
     --help|-h)
       usage
       ;;
@@ -131,11 +136,6 @@ parse_inputs()
     --template|-t)
       [ -n "$2" ] || error 'Missing template path or identifier'
       TEMPLATE="$2"
-      shift 2
-      ;;
-    --username|-u)
-      [ -n "$2" ] || error 'Missing username value'
-      GITHUB_USERNAME="$2"
       shift 2
       ;;
     --verbose|-v)

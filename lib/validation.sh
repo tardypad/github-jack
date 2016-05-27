@@ -15,7 +15,7 @@ validate_github_username()
      && ! curl --silent "https://api.github.com/users/$GITHUB_USERNAME" \
           | grep --quiet '"type": "User"'
   then
-    error 'Invalid username: non existing user profile'
+    error 'Invalid Github username: non existing user profile'
   fi
 }
 
