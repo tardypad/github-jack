@@ -7,13 +7,16 @@ left/center/right is not precise with half/full weeks display
 Testing:
 
 Improvements:
+- Space Invaders templates
 - follow https://google.github.io/styleguide/shell.xml
 - Add README
 - Add LICENSE
 - autocomplete (for templates and positions)
+- add images to visualize the templates as renderered
+- add cronjob script example(s) for continuous template
 
 New Features:
-- add option to start after last commit of the work repo (imply keep or not?)
+- add position option to start after last commit of the work repo
 
 Discarded:
 - option to define value to fill days outside the template
@@ -22,6 +25,10 @@ Discarded:
 - combine color and username options (same shade multiplier purpose)
   github usernames can be integers too and thus we wouldn't be able to
   differentiate them
+- add option to specify spaces after position
+  would be useful when adding new template after last one
+  but would "require" another option to specify the value to fill those days
+  better put the spaces inside the templates themselves
 
 Research:
 - use getopt or getopts for parsing inputs
