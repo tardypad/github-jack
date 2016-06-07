@@ -72,8 +72,8 @@ EOF
 
 error()
 {
-  [ -z "$1" ] || echo "$1"
-  echo "Try '$( basename $0 ) --help' for more information"
+  [ -z "$1" ] || echo "$1" >&2
+  echo "Try '$( basename $0 ) --help' for more information" >&2
   exit 1
 }
 
