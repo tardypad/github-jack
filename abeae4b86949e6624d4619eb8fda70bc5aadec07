@@ -7,12 +7,14 @@ left/center/right is not precise with half/full weeks display
 Testing:
 
 Improvements:
-- Space Invaders templates
 - follow https://google.github.io/styleguide/shell.xml
 - Add README
 - Add LICENSE
 - autocomplete (for templates and positions)
-- add images to visualize the templates as renderered
+- shorten pattern templates to the minimum part
+- Invaders templates
+- add images to visualize the templates as renderered (introduce .tpl extension)
+- group templates inside folders (adapt use of template id as parameter)
 - add cronjob script example(s) for continuous template
 
 New Features:
