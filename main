@@ -8,13 +8,13 @@ SCRIPT_DIR=$( dirname "$( readlink --canonicalize "$0" )" )
 . "${SCRIPT_DIR}/lib/validation.sh"
 . "${SCRIPT_DIR}/lib/work.sh"
 
-init_variables
+general::init_variables
 
-parse_inputs "$@"
-validate_inputs
+general::parse_inputs "$@"
+general::validate_inputs
 
-define_multiplier
-init_work
-commit_work
+work::define_multiplier
+work::init_work
+work::commit_work
 
 exit 0

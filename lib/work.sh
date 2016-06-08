@@ -14,8 +14,7 @@
 # Returns:
 #   0 if reset is not confirmed
 ################################################################################
-init_work()
-{
+work::init_work() {
   if [[ -d "${REPOSITORY}" ]]; then
     if ! ${KEEP}; then
       local name=$( basename $( readlink --canonicalize "${REPOSITORY}" ) )
@@ -33,12 +32,12 @@ init_work()
         done
       fi
 
-      info "Resetting ${name} work repository"
+      general::info "Resetting ${name} work repository"
       rm -rf "${REPOSITORY}/.git"
       [[ -z "${WRITE_FILE}" ]] || > "${write_file_path}"
     fi
   else
-    info "Creating ${REPOSITORY} work repository"
+    general::info "Creating ${REPOSITORY} work repository"
     mkdir --parents "${REPOSITORY}"
   fi
 
@@ -55,8 +54,7 @@ init_work()
 # Returns:
 #   None
 ################################################################################
-define_multiplier()
-{
+work::define_multiplier() {
   if [[ -n "${GITHUB_USERNAME}" ]]; then
     # Find lowest number of commits per day colored with darkest shade
     local count=$(
@@ -85,8 +83,7 @@ define_multiplier()
 # Returns:
 #   None
 ################################################################################
-day_count()
-{
+work::day_count() {
   local day_number="$1"
   local row=$(( ${day_number} % 7 + 1 ))
   local col=$(( ${day_number} / 7 + 1 ))
@@ -111,8 +108,7 @@ day_count()
 # Returns:
 #   None
 ################################################################################
-start_date()
-{
+work::start_date() {
   # Define approximate position if an identifier is used
   if [[ "${POSITION}" == 'left' ]]; then
     POSITION='-1 year'
@@ -149,20 +145,19 @@ start_date()
 # Returns:
 #   None
 ################################################################################
-commit_work()
-{
+work::commit_work() {
   local date_format='%Y-%m-%d'
-  local start_date="$( date --date "$( start_date )" +${date_format} )"
+  local start_date="$( date --date "$( work::start_date )" +${date_format} )"
   local days=$(( $( wc --max-line-length < "${TEMPLATE}" ) * 7 ))
   local date count
 
   for (( c = 0; c < "${days}"; c++ )); do
     date=$( date --date "${start_date} +$c day" +${date_format} )
-    count=$( day_count $c )
-    commit_day_work "${date}" "${count}"
+    count=$( work::day_count $c )
+    work::commit_day_work "${date}" "${count}"
   done
 
-  info "${MESSAGE}"
+  general::info "${MESSAGE}"
 }
 
 
@@ -175,8 +170,7 @@ commit_work()
 # Returns:
 #   None
 ################################################################################
-random_time()
-{
+work::random_time() {
   local hours=$( printf %02d $(( ${RANDOM} % 24 )) )
   local minutes=$( printf %02d $(( ${RANDOM} % 60 )) )
   local seconds=$( printf %02d $(( ${RANDOM} % 60 )) )
@@ -200,21 +194,20 @@ random_time()
 # Returns:
 #   None
 ################################################################################
-commit_day_work()
-{
+work::commit_day_work() {
   local date="$1"
   local count="$2"
   local times
 
-  info "Committing day work ${date} ${count}"
+  general::info "Committing day work ${date} ${count}"
 
   # Generate multiple random times to be sorted afterwards
   for ((i = 1; i <= ${count}; i++)); do
-    times="${times} $( random_time )"
+    times="${times} $( work::random_time )"
   done
 
   for time in $( echo "${times}" | tr " " "\n" | sort ); do
-   commit_a_work "${date}" "${time}"
+   work::commit_a_work "${date}" "${time}"
   done
 }
 
@@ -233,8 +226,7 @@ commit_day_work()
 # Returns:
 #   None
 ################################################################################
-commit_a_work()
-{
+work::commit_a_work() {
   local date="$1"
   local time="$2"
 
