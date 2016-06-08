@@ -1,5 +1,15 @@
 # Inputs validation functions
 
+
+################################################################################
+# Validates the position input
+# Globals:
+#   POSITION
+# Arguments:
+#   None
+# Returns:
+#   1 if invalid
+################################################################################
 validate_position()
 {
   if ! date --date "$POSITION" &> /dev/null \
@@ -11,6 +21,16 @@ validate_position()
   fi
 }
 
+
+################################################################################
+# Validates the Github username input
+# Globals:
+#   GITHUB_USERNAME
+# Arguments:
+#   None
+# Returns:
+#   1 if invalid
+################################################################################
 validate_github_username()
 {
   if [ -n "$GITHUB_USERNAME" ] \
@@ -21,6 +41,16 @@ validate_github_username()
   fi
 }
 
+
+################################################################################
+# Validates the shade multiplier input
+# Globals:
+#   SHADE_MULTIPLIER
+# Arguments:
+#   None
+# Returns:
+#   1 if invalid
+################################################################################
 validate_shade_multiplier()
 {
   if ! [[ $SHADE_MULTIPLIER =~ ^[1-9][0-9]* ]]
@@ -29,6 +59,17 @@ validate_shade_multiplier()
   fi
 }
 
+
+################################################################################
+# Validates the template input
+# Globals:
+#   SCRIPT_DIR
+#   TEMPLATE
+# Arguments:
+#   None
+# Returns:
+#   1 if invalid
+################################################################################
 validate_template()
 {
   if [ ! -f "$TEMPLATE" ]

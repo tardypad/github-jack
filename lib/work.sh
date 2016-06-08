@@ -1,5 +1,19 @@
 # Work related functions
 
+
+################################################################################
+# Initialize the work repository
+# Globals:
+#   FORCE
+#   KEEP
+#   REPLY
+#   REPOSITORY
+#   WRITE_FILE
+# Arguments:
+#   None
+# Returns:
+#   0 if reset is not confirmed
+################################################################################
 init_work()
 {
   if [ -d "$REPOSITORY" ]
@@ -33,6 +47,16 @@ init_work()
   git --git-dir "$REPOSITORY/.git" --work-tree "$REPOSITORY" init --quiet
 }
 
+
+################################################################################
+# Define the shade multiplier
+# Globals:
+#   GITHUB_USERNAME
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################################################
 define_multiplier()
 {
   if [ -n "$GITHUB_USERNAME" ]
@@ -50,6 +74,17 @@ define_multiplier()
   fi
 }
 
+
+################################################################################
+# Prints the commits count of a day
+# Globals:
+#   SHADE_MULTIPLIER
+#   TEMPLATE
+# Arguments:
+#   - day number
+# Returns:
+#   None
+################################################################################
 day_count()
 {
   local day_number="$1"
@@ -65,6 +100,17 @@ day_count()
   echo $(( $index * $SHADE_MULTIPLIER ))
 }
 
+
+################################################################################
+# Prints the start date of the work
+# Globals:
+#   POSITION
+#   TEMPLATE
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################################################
 start_date()
 {
   if [ "$POSITION" == 'left' ]
@@ -86,6 +132,24 @@ start_date()
   echo "$start"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
 }
 
+
+################################################################################
+# Create all the work commits
+# Globals:
+#   AUTHOR_EMAIL
+#   AUTHOR_NAME
+#   MESSAGE
+#   POSITION
+#   REPOSITORY
+#   SHADE_MULTIPLIER
+#   TEMPLATE
+#   VERBOSE
+#   WRITE_FILE
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################################################
 commit_work()
 {
   local date_format='%Y-%m-%d'
@@ -103,6 +167,16 @@ commit_work()
   info "$MESSAGE"
 }
 
+
+################################################################################
+# Prints a random time in the format HH:MM:SS
+# Globals:
+#   RANDOM
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################################################
 random_time()
 {
   local hours=$( printf %02d $(( $RANDOM % 24 )) )
@@ -112,6 +186,22 @@ random_time()
   echo $hours:$minutes:$seconds
 }
 
+
+################################################################################
+# Create all the work commits for a day
+# Globals:
+#   AUTHOR_EMAIL
+#   AUTHOR_NAME
+#   MESSAGE
+#   REPOSITORY
+#   VERBOSE
+#   WRITE_FILE
+# Arguments:
+#   - day date in the format YYYY-MM-DD
+#   - number of commits to create
+# Returns:
+#   None
+################################################################################
 commit_day_work()
 {
   local date="$1"
@@ -131,6 +221,21 @@ commit_day_work()
   done
 }
 
+
+################################################################################
+# Create one work commit
+# Globals:
+#   AUTHOR_EMAIL
+#   AUTHOR_NAME
+#   MESSAGE
+#   REPOSITORY
+#   WRITE_FILE
+# Arguments:
+#   - commit date in the format YYYY-MM-DD
+#   - commit time in the format HH:MM:SS
+# Returns:
+#   None
+################################################################################
 commit_a_work()
 {
   local date="$1"

@@ -1,5 +1,26 @@
 # General global functions
 
+
+################################################################################
+# Initialize the environment global variables
+# Globals:
+#   AUTHOR_EMAIL
+#   AUTHOR_NAME
+#   FORCE
+#   GITHUB_USERNAME
+#   KEEP
+#   MESSAGE
+#   POSITION
+#   REPOSITORY
+#   SHADE_MULTIPLIER
+#   TEMPLATE
+#   VERBOSE
+#   WRITE_FILE
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################################################
 init_variables()
 {
   AUTHOR_EMAIL='jack@work.com'
@@ -26,6 +47,16 @@ init_variables()
   fi
 }
 
+
+################################################################################
+# Prints the usage explanation of the main program and exit
+# Globals:
+#   SCRIPT_DIR
+# Arguments:
+#   None
+# Returns:
+#   0
+################################################################################
 usage()
 {
   cat << EOF
@@ -72,6 +103,16 @@ EOF
   exit 0
 }
 
+
+################################################################################
+# Prints an error message and exit
+# Globals:
+#   None
+# Arguments:
+#   - message to display (optional)
+# Returns:
+#   1
+################################################################################
 error()
 {
   [ -z "$1" ] || echo "$1" >&2
@@ -79,11 +120,43 @@ error()
   exit 1
 }
 
+
+################################################################################
+# Prints an information message if verbose mode is enabled
+# Globals:
+#   VERBOSE
+# Arguments:
+#   - message to display
+# Returns:
+#   None
+################################################################################
 info()
 {
   "$VERBOSE" && [ -n "$1" ] && echo "$1"
 }
 
+
+################################################################################
+# Parse the main program's inputs
+# Globals:
+#   AUTHOR_EMAIL
+#   AUTHOR_NAME
+#   FORCE
+#   GITHUB_USERNAME
+#   KEEP
+#   MESSAGE
+#   POSITION
+#   REPOSITORY
+#   SHADE_MULTIPLIER
+#   TEMPLATE
+#   VERBOSE
+#   WRITE_FILE
+# Arguments:
+#   Program's arguments
+# Returns:
+#   1 in case of invalid argument or missing value
+#
+################################################################################
 parse_inputs()
 {
   while [[ "$#" -gt 0 ]]
@@ -156,6 +229,20 @@ parse_inputs()
   done
 }
 
+
+################################################################################
+# Validates all the inputs
+# Globals:
+#   GITHUB_USERNAME
+#   POSITION
+#   SCRIPT_DIR
+#   SHADE_MULTIPLIER
+#   TEMPLATE
+# Arguments:
+#   None
+# Returns:
+#   1 if at least one of them is invalid
+################################################################################
 validate_inputs()
 {
   validate_position
