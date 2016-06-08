@@ -25,9 +25,9 @@ init_work()
         while true; do
           read -p "Confirm the reset of that \"$name\" repository work? "
           case $REPLY in
-              yes|y) break;;
-              no|n) exit 0;;
-              *) echo "Please answer yes or no.";;
+            yes|y) break ;;
+            no|n) exit 0 ;;
+            *) echo "Please answer yes or no." ;;
           esac
         done
       fi
