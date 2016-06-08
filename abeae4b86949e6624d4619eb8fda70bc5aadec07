@@ -1,5 +1,4 @@
 Cleaning:
-- add comments for non self explicit parts
 
 Bugs:
 left/center/right is not precise with half/full weeks display
@@ -7,7 +6,6 @@ left/center/right is not precise with half/full weeks display
 Testing:
 
 Improvements:
-- follow https://google.github.io/styleguide/shell.xml
 - Add README
 - Add LICENSE
 - autocomplete (for templates and positions)
