@@ -64,11 +64,11 @@ define_multiplier()
     # Find lowest number of commits per day colored with darkest shade
     local count=$(
       curl --silent "https://github.com/$GITHUB_USERNAME" \
-      | grep data-count \
-      | grep '#1e6823' \
-      | sed --regexp-extended 's/.* data-count="([0-9]+)" .*/\1/' \
-      | sort --unique --general-numeric-sort \
-      | head --lines 1
+        | grep data-count \
+        | grep '#1e6823' \
+        | sed --regexp-extended 's/.* data-count="([0-9]+)" .*/\1/' \
+        | sort --unique --general-numeric-sort \
+        | head --lines 1
     )
     [[ "$count" -gt 0 ]] || count=1
 
@@ -95,9 +95,9 @@ day_count()
   local col=$(( $day_number / 7 + 1 ))
   local index=$(
     head "$TEMPLATE" --lines $row \
-    | tail --lines 1 \
-    | head --bytes $col \
-    | tail --bytes 1
+      | tail --lines 1 \
+      | head --bytes $col \
+      | tail --bytes 1
   )
 
   echo $(( $index * $SHADE_MULTIPLIER ))
