@@ -14,7 +14,7 @@ general::parse_inputs "$@"
 general::validate_inputs
 
 work::define_multiplier
-work::init_work
-work::commit_work
+work::init
+work::commit_all
 
 exit 0

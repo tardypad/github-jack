@@ -14,7 +14,7 @@
 # Returns:
 #   0 if reset is not confirmed
 ################################################################################
-work::init_work() {
+work::init() {
   if [[ -d "${REPOSITORY}" ]]; then
     if ! ${KEEP}; then
       local name=$( basename $( readlink --canonicalize "${REPOSITORY}" ) )
@@ -145,7 +145,7 @@ work::start_date() {
 # Returns:
 #   None
 ################################################################################
-work::commit_work() {
+work::commit_all() {
   local date_format='%Y-%m-%d'
   local start_date="$( date --date "$( work::start_date )" +${date_format} )"
   local days=$(( $( wc --max-line-length < "${TEMPLATE}" ) * 7 ))
@@ -154,7 +154,7 @@ work::commit_work() {
   for (( c = 0; c < "${days}"; c++ )); do
     date=$( date --date "${start_date} +$c day" +${date_format} )
     count=$( work::day_count $c )
-    work::commit_day_work "${date}" "${count}"
+    work::commit_day "${date}" "${count}"
   done
 
   general::info "${MESSAGE}"
@@ -194,7 +194,7 @@ work::random_time() {
 # Returns:
 #   None
 ################################################################################
-work::commit_day_work() {
+work::commit_day() {
   local date="$1"
   local count="$2"
   local times
@@ -207,7 +207,7 @@ work::commit_day_work() {
   done
 
   for time in $( echo "${times}" | tr " " "\n" | sort ); do
-   work::commit_a_work "${date}" "${time}"
+   work::commit_single "${date}" "${time}"
   done
 }
 
@@ -226,7 +226,7 @@ work::commit_day_work() {
 # Returns:
 #   None
 ################################################################################
-work::commit_a_work() {
+work::commit_single() {
   local date="$1"
   local time="$2"
 
