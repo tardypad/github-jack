@@ -33,6 +33,7 @@ validate_position()
 ################################################################################
 validate_github_username()
 {
+  # Check that the username provided exists and is linked to an user account
   if [ -n "$GITHUB_USERNAME" ] \
      && ! curl --silent "https://api.github.com/users/$GITHUB_USERNAME" \
           | grep --quiet '"type": "User"'
@@ -89,6 +90,7 @@ validate_template()
     error 'Invalid template: should contain only integers 0 to 4 and newlines'
   fi
 
+  # Ignore trailing newlines for further checks
   local trimmed_template=$( sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$TEMPLATE" )
 
   if [ $( echo "$trimmed_template" | wc --lines ) != 7 ]

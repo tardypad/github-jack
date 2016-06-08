@@ -61,6 +61,7 @@ define_multiplier()
 {
   if [ -n "$GITHUB_USERNAME" ]
   then
+    # Find lowest number of commits per day colored with darkest shade
     local count=$(
       curl --silent "https://github.com/$GITHUB_USERNAME" \
       | grep data-count \
@@ -70,6 +71,8 @@ define_multiplier()
       | head --lines 1
     )
     [[ "$count" -gt 0 ]] || count=1
+
+    # Ceiling (division by number of indexes)
     SHADE_MULTIPLIER=$( printf %0.f $( echo "$count / 4" | bc --mathlib ) )
   fi
 }
@@ -113,6 +116,7 @@ day_count()
 ################################################################################
 start_date()
 {
+  # Define approximate position if an identifier is used
   if [ "$POSITION" == 'left' ]
   then
     POSITION='-1 year'
@@ -128,6 +132,7 @@ start_date()
     fi
   fi
 
+  # Find the closest Sunday
   local start="$( echo "$POSITION" | sed "s/ /\\\ /g" )"
   echo "$start"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
 }
@@ -210,6 +215,7 @@ commit_day_work()
 
   info "Committing day work $date $count"
 
+  # Generate multiple random times to be sorted afterwards
   for ((i = 1; i <= $count; i++))
   do
     times="$times $( random_time )"
