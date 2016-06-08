@@ -16,15 +16,12 @@
 ################################################################################
 init_work()
 {
-  if [ -d "$REPOSITORY" ]
-  then
-    if ! $KEEP
-    then
+  if [ -d "$REPOSITORY" ]; then
+    if ! $KEEP; then
       local name=$( basename $( readlink --canonicalize "$REPOSITORY" ) )
 
       if ! $FORCE && \
-        ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] )
-      then
+        ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] ); then
         while true; do
           read -p "Confirm the reset of that \"$name\" repository work? "
           case $REPLY in
@@ -59,8 +56,7 @@ init_work()
 ################################################################################
 define_multiplier()
 {
-  if [ -n "$GITHUB_USERNAME" ]
-  then
+  if [ -n "$GITHUB_USERNAME" ]; then
     # Find lowest number of commits per day colored with darkest shade
     local count=$(
       curl --silent "https://github.com/$GITHUB_USERNAME" \
@@ -117,17 +113,14 @@ day_count()
 start_date()
 {
   # Define approximate position if an identifier is used
-  if [ "$POSITION" == 'left' ]
-  then
+  if [ "$POSITION" == 'left' ]; then
     POSITION='-1 year'
   else
     local template_cols=$( wc --max-line-length < "$TEMPLATE" )
 
-    if [ "$POSITION" == 'center' ]
-    then
+    if [ "$POSITION" == 'center' ]; then
       POSITION="-53 weeks $(( (53 - $template_cols)/2 )) weeks"
-    elif [ "$POSITION" == 'right' ]
-    then
+    elif [ "$POSITION" == 'right' ]; then
       POSITION="-$template_cols weeks"
     fi
   fi
@@ -162,8 +155,7 @@ commit_work()
   local days=$(( $( wc --max-line-length < "$TEMPLATE" ) * 7 ))
   local date count
 
-  for (( c = 0; c < "$days"; c++ ))
-  do
+  for (( c = 0; c < "$days"; c++ )); do
     date=$( date --date "$start_date +$c day" +$date_format )
     count=$( day_count $c )
     commit_day_work "$date" "$count"
@@ -216,13 +208,11 @@ commit_day_work()
   info "Committing day work $date $count"
 
   # Generate multiple random times to be sorted afterwards
-  for ((i = 1; i <= $count; i++))
-  do
+  for ((i = 1; i <= $count; i++)); do
     times="$times $( random_time )"
   done
 
-  for time in $( echo "$times" | tr " " "\n" | sort )
-  do
+  for time in $( echo "$times" | tr " " "\n" | sort ); do
    commit_a_work "$date" "$time"
   done
 }
@@ -247,8 +237,7 @@ commit_a_work()
   local date="$1"
   local time="$2"
 
-  if [ -n "$WRITE_FILE" ]
-  then
+  if [ -n "$WRITE_FILE" ]; then
     echo "$MESSAGE" >> "$REPOSITORY/$WRITE_FILE"
     git \
     --git-dir "$REPOSITORY/.git" \

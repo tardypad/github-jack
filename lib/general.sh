@@ -36,13 +36,11 @@ init_variables()
   VERBOSE=false
   WRITE_FILE=
 
-  if git config --global --includes user.name &> /dev/null
-  then
+  if git config --global --includes user.name &> /dev/null; then
     AUTHOR_NAME=$( git config --global --includes user.name )
   fi
 
-  if git config --global --includes user.email &> /dev/null
-  then
+  if git config --global --includes user.email &> /dev/null; then
     AUTHOR_EMAIL=$( git config --global --includes user.email )
   fi
 }
@@ -159,8 +157,7 @@ info()
 ################################################################################
 parse_inputs()
 {
-  while [[ "$#" -gt 0 ]]
-  do
+  while [[ "$#" -gt 0 ]]; do
     case "$1" in
     --email|-e)
       [ -n "$2" ] || error 'Missing email value'
