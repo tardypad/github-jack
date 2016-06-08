@@ -93,7 +93,7 @@ day_count()
   local day_number="$1"
   local row=$(( $day_number % 7 + 1 ))
   local col=$(( $day_number / 7 + 1 ))
-  local index=$( \
+  local index=$(
     head "$TEMPLATE" --lines $row \
     | tail --lines 1 \
     | head --bytes $col \
