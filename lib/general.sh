@@ -32,7 +32,7 @@ init_variables()
   POSITION='left'
   REPOSITORY=.
   SHADE_MULTIPLIER=1
-  TEMPLATE="jack"
+  TEMPLATE='jack'
   VERBOSE=false
   WRITE_FILE=
 
@@ -78,8 +78,8 @@ OPTIONAL ARGUMENTS:
   -w, --write       VALUE     write work message into repository file
 
 PROVIDED TEMPLATES IDENTIFIER:
-  In $SCRIPT_DIR/templates/ folder:
-$( find "$SCRIPT_DIR/templates/" -type f -printf '   - %f\n' )
+  In ${SCRIPT_DIR}/templates/ folder:
+$( find "${SCRIPT_DIR}/templates/" -type f -printf '   - %f\n' )
 
 WORK TEMPLATE POSITIONS:
   left      work starts on the left side of the board
@@ -130,7 +130,7 @@ error()
 ################################################################################
 info()
 {
-  "$VERBOSE" && [ -n "$1" ] && echo "$1"
+  "${VERBOSE}" && [ -n "$1" ] && echo "$1"
 }
 
 

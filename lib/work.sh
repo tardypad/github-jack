@@ -16,15 +16,16 @@
 ################################################################################
 init_work()
 {
-  if [ -d "$REPOSITORY" ]; then
-    if ! $KEEP; then
-      local name=$( basename $( readlink --canonicalize "$REPOSITORY" ) )
+  if [ -d "${REPOSITORY}" ]; then
+    if ! ${KEEP}; then
+      local name=$( basename $( readlink --canonicalize "${REPOSITORY}" ) )
+      local write_file_path="${REPOSITORY}/${WRITE_FILE}"
 
-      if ! $FORCE && \
-        ( [ -d "$REPOSITORY/.git" ] || [ -f "$REPOSITORY/$WRITE_FILE" ] ); then
+      if ! ${FORCE} && \
+        ( [ -d "${REPOSITORY}/.git" ] || [ -f "${write_file_path}" ] ); then
         while true; do
-          read -p "Confirm the reset of that \"$name\" repository work? "
-          case $REPLY in
+          read -p "Confirm the reset of that \"${name}\" repository work? "
+          case "${REPLY}" in
             yes|y) break ;;
             no|n) exit 0 ;;
             *) echo "Please answer yes or no." ;;
@@ -32,16 +33,16 @@ init_work()
         done
       fi
 
-      info "Resetting $name work repository"
-      rm -rf "$REPOSITORY/.git"
-      [ -z "$WRITE_FILE" ] || > "$REPOSITORY/$WRITE_FILE"
+      info "Resetting ${name} work repository"
+      rm -rf "${REPOSITORY}/.git"
+      [ -z "${WRITE_FILE}" ] || > "${write_file_path}"
     fi
   else
-    info "Creating $REPOSITORY work repository"
-    mkdir --parents "$REPOSITORY"
+    info "Creating ${REPOSITORY} work repository"
+    mkdir --parents "${REPOSITORY}"
   fi
 
-  git --git-dir "$REPOSITORY/.git" --work-tree "$REPOSITORY" init --quiet
+  git --git-dir "${REPOSITORY}/.git" --work-tree "${REPOSITORY}" init --quiet
 }
 
 
@@ -56,20 +57,20 @@ init_work()
 ################################################################################
 define_multiplier()
 {
-  if [ -n "$GITHUB_USERNAME" ]; then
+  if [ -n "${GITHUB_USERNAME}" ]; then
     # Find lowest number of commits per day colored with darkest shade
     local count=$(
-      curl --silent "https://github.com/$GITHUB_USERNAME" \
+      curl --silent "https://github.com/${GITHUB_USERNAME}" \
         | grep data-count \
         | grep '#1e6823' \
         | sed --regexp-extended 's/.* data-count="([0-9]+)" .*/\1/' \
         | sort --unique --general-numeric-sort \
         | head --lines 1
     )
-    [[ "$count" -gt 0 ]] || count=1
+    [[ "${count}" -gt 0 ]] || count=1
 
     # Ceiling (division by number of indexes)
-    SHADE_MULTIPLIER=$( printf %0.f $( echo "$count / 4" | bc --mathlib ) )
+    SHADE_MULTIPLIER=$( printf %0.f $( echo "${count} / 4" | bc --mathlib ) )
   fi
 }
 
@@ -87,16 +88,16 @@ define_multiplier()
 day_count()
 {
   local day_number="$1"
-  local row=$(( $day_number % 7 + 1 ))
-  local col=$(( $day_number / 7 + 1 ))
+  local row=$(( ${day_number} % 7 + 1 ))
+  local col=$(( ${day_number} / 7 + 1 ))
   local index=$(
-    head "$TEMPLATE" --lines $row \
+    head "${TEMPLATE}" --lines ${row} \
       | tail --lines 1 \
-      | head --bytes $col \
+      | head --bytes ${col} \
       | tail --bytes 1
   )
 
-  echo $(( $index * $SHADE_MULTIPLIER ))
+  echo $(( ${index} * ${SHADE_MULTIPLIER} ))
 }
 
 
@@ -113,21 +114,21 @@ day_count()
 start_date()
 {
   # Define approximate position if an identifier is used
-  if [ "$POSITION" == 'left' ]; then
+  if [ "${POSITION}" == 'left' ]; then
     POSITION='-1 year'
   else
-    local template_cols=$( wc --max-line-length < "$TEMPLATE" )
+    local template_cols=$( wc --max-line-length < "${TEMPLATE}" )
 
-    if [ "$POSITION" == 'center' ]; then
-      POSITION="-53 weeks $(( (53 - $template_cols)/2 )) weeks"
-    elif [ "$POSITION" == 'right' ]; then
-      POSITION="-$template_cols weeks"
+    if [ "${POSITION}" == 'center' ]; then
+      POSITION="-53 weeks $(( (53 - ${template_cols})/2 )) weeks"
+    elif [ "${POSITION}" == 'right' ]; then
+      POSITION="-${template_cols} weeks"
     fi
   fi
 
   # Find the closest Sunday
-  local start="$( echo "$POSITION" | sed "s/ /\\\ /g" )"
-  echo "$start"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
+  local start="$( echo "${POSITION}" | sed "s/ /\\\ /g" )"
+  echo "${start}"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
 }
 
 
@@ -151,17 +152,17 @@ start_date()
 commit_work()
 {
   local date_format='%Y-%m-%d'
-  local start_date="$( date --date "$( start_date )" +$date_format )"
-  local days=$(( $( wc --max-line-length < "$TEMPLATE" ) * 7 ))
+  local start_date="$( date --date "$( start_date )" +${date_format} )"
+  local days=$(( $( wc --max-line-length < "${TEMPLATE}" ) * 7 ))
   local date count
 
-  for (( c = 0; c < "$days"; c++ )); do
-    date=$( date --date "$start_date +$c day" +$date_format )
+  for (( c = 0; c < "${days}"; c++ )); do
+    date=$( date --date "${start_date} +$c day" +${date_format} )
     count=$( day_count $c )
-    commit_day_work "$date" "$count"
+    commit_day_work "${date}" "${count}"
   done
 
-  info "$MESSAGE"
+  info "${MESSAGE}"
 }
 
 
@@ -176,11 +177,11 @@ commit_work()
 ################################################################################
 random_time()
 {
-  local hours=$( printf %02d $(( $RANDOM % 24 )) )
-  local minutes=$( printf %02d $(( $RANDOM % 60 )) )
-  local seconds=$( printf %02d $(( $RANDOM % 60 )) )
+  local hours=$( printf %02d $(( ${RANDOM} % 24 )) )
+  local minutes=$( printf %02d $(( ${RANDOM} % 60 )) )
+  local seconds=$( printf %02d $(( ${RANDOM} % 60 )) )
 
-  echo $hours:$minutes:$seconds
+  echo ${hours}:${minutes}:${seconds}
 }
 
 
@@ -205,15 +206,15 @@ commit_day_work()
   local count="$2"
   local times
 
-  info "Committing day work $date $count"
+  info "Committing day work ${date} ${count}"
 
   # Generate multiple random times to be sorted afterwards
-  for ((i = 1; i <= $count; i++)); do
-    times="$times $( random_time )"
+  for ((i = 1; i <= ${count}; i++)); do
+    times="${times} $( random_time )"
   done
 
-  for time in $( echo "$times" | tr " " "\n" | sort ); do
-   commit_a_work "$date" "$time"
+  for time in $( echo "${times}" | tr " " "\n" | sort ); do
+   commit_a_work "${date}" "${time}"
   done
 }
 
@@ -237,22 +238,22 @@ commit_a_work()
   local date="$1"
   local time="$2"
 
-  if [ -n "$WRITE_FILE" ]; then
-    echo "$MESSAGE" >> "$REPOSITORY/$WRITE_FILE"
+  if [ -n "${WRITE_FILE}" ]; then
+    echo "${MESSAGE}" >> "${REPOSITORY}/${WRITE_FILE}"
     git \
-    --git-dir "$REPOSITORY/.git" \
-    --work-tree "$REPOSITORY" \
+    --git-dir "${REPOSITORY}/.git" \
+    --work-tree "${REPOSITORY}" \
     add \
-    "$WRITE_FILE"
+    "${WRITE_FILE}"
   fi
 
   git \
-  --git-dir "$REPOSITORY/.git" \
-  --work-tree "$REPOSITORY" \
+  --git-dir "${REPOSITORY}/.git" \
+  --work-tree "${REPOSITORY}" \
   commit \
   --allow-empty \
-  --message "$MESSAGE" \
-  --author "$AUTHOR_NAME <$AUTHOR_EMAIL>" \
-  --date "$date $time" \
+  --message "${MESSAGE}" \
+  --author "${AUTHOR_NAME} <${AUTHOR_EMAIL}>" \
+  --date "${date} ${time}" \
   --quiet
 }
