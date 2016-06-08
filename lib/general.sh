@@ -113,7 +113,7 @@ EOF
 ################################################################################
 error()
 {
-  [ -z "$1" ] || echo "$1" >&2
+  [[ -z "$1" ]] || echo "$1" >&2
   echo "Try '$( basename $0 ) --help' for more information" >&2
   exit 1
 }
@@ -130,7 +130,7 @@ error()
 ################################################################################
 info()
 {
-  "${VERBOSE}" && [ -n "$1" ] && echo "$1"
+  "${VERBOSE}" && [[ -n "$1" ]] && echo "$1"
 }
 
 
@@ -160,7 +160,7 @@ parse_inputs()
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
       --email|-e)
-        [ -n "$2" ] || error 'Missing email value'
+        [[ -n "$2" ]] || error 'Missing email value'
         AUTHOR_EMAIL="$2"
         shift 2
         ;;
@@ -169,7 +169,7 @@ parse_inputs()
         shift
         ;;
       --github|-g)
-        [ -n "$2" ] || error 'Missing Github username'
+        [[ -n "$2" ]] || error 'Missing Github username'
         GITHUB_USERNAME="$2"
         shift 2
         ;;
@@ -181,32 +181,32 @@ parse_inputs()
         shift
         ;;
       --message|-m)
-        [ -n "$2" ] || error 'Missing message value'
+        [[ -n "$2" ]] || error 'Missing message value'
         MESSAGE="$2"
         shift 2
         ;;
       --name|-n)
-        [ -n "$2" ] || error 'Missing name value'
+        [[ -n "$2" ]] || error 'Missing name value'
         AUTHOR_NAME="$2"
         shift 2
         ;;
       --position|-p)
-        [ -n "$2" ] || error 'Missing position start date or identifier'
+        [[ -n "$2" ]] || error 'Missing position start date or identifier'
         POSITION="$2"
         shift 2
         ;;
       --repository|-r)
-        [ -n "$2" ] || error 'Missing repository path'
+        [[ -n "$2" ]] || error 'Missing repository path'
         REPOSITORY="$2"
         shift 2
         ;;
       --shade|-s)
-        [ -n "$2" ] || error 'Missing shade multiplier'
+        [[ -n "$2" ]] || error 'Missing shade multiplier'
         SHADE_MULTIPLIER="$2"
         shift 2
         ;;
       --template|-t)
-        [ -n "$2" ] || error 'Missing template path or identifier'
+        [[ -n "$2" ]] || error 'Missing template path or identifier'
         TEMPLATE="$2"
         shift 2
         ;;
@@ -215,7 +215,7 @@ parse_inputs()
         shift
         ;;
       --write|-w)
-        [ -n "$2" ] || error 'Missing write filename value'
+        [[ -n "$2" ]] || error 'Missing write filename value'
         WRITE_FILE="$2"
         shift 2
         ;;

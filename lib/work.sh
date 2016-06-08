@@ -16,13 +16,13 @@
 ################################################################################
 init_work()
 {
-  if [ -d "${REPOSITORY}" ]; then
+  if [[ -d "${REPOSITORY}" ]]; then
     if ! ${KEEP}; then
       local name=$( basename $( readlink --canonicalize "${REPOSITORY}" ) )
       local write_file_path="${REPOSITORY}/${WRITE_FILE}"
 
       if ! ${FORCE} && \
-        ( [ -d "${REPOSITORY}/.git" ] || [ -f "${write_file_path}" ] ); then
+        ( [[ -d "${REPOSITORY}/.git" ]] || [[ -f "${write_file_path}" ]] ); then
         while true; do
           read -p "Confirm the reset of that \"${name}\" repository work? "
           case "${REPLY}" in
@@ -35,7 +35,7 @@ init_work()
 
       info "Resetting ${name} work repository"
       rm -rf "${REPOSITORY}/.git"
-      [ -z "${WRITE_FILE}" ] || > "${write_file_path}"
+      [[ -z "${WRITE_FILE}" ]] || > "${write_file_path}"
     fi
   else
     info "Creating ${REPOSITORY} work repository"
@@ -57,7 +57,7 @@ init_work()
 ################################################################################
 define_multiplier()
 {
-  if [ -n "${GITHUB_USERNAME}" ]; then
+  if [[ -n "${GITHUB_USERNAME}" ]]; then
     # Find lowest number of commits per day colored with darkest shade
     local count=$(
       curl --silent "https://github.com/${GITHUB_USERNAME}" \
@@ -114,14 +114,14 @@ day_count()
 start_date()
 {
   # Define approximate position if an identifier is used
-  if [ "${POSITION}" == 'left' ]; then
+  if [[ "${POSITION}" == 'left' ]]; then
     POSITION='-1 year'
   else
     local template_cols=$( wc --max-line-length < "${TEMPLATE}" )
 
-    if [ "${POSITION}" == 'center' ]; then
+    if [[ "${POSITION}" == 'center' ]]; then
       POSITION="-53 weeks $(( (53 - ${template_cols})/2 )) weeks"
-    elif [ "${POSITION}" == 'right' ]; then
+    elif [[ "${POSITION}" == 'right' ]]; then
       POSITION="-${template_cols} weeks"
     fi
   fi
@@ -238,7 +238,7 @@ commit_a_work()
   local date="$1"
   local time="$2"
 
-  if [ -n "${WRITE_FILE}" ]; then
+  if [[ -n "${WRITE_FILE}" ]]; then
     echo "${MESSAGE}" >> "${REPOSITORY}/${WRITE_FILE}"
     git \
     --git-dir "${REPOSITORY}/.git" \
