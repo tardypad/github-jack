@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# Main program to generate the Github's contributions board work
 
 SCRIPT_DIR=$( dirname "$( readlink --canonicalize "$0" )" )
 

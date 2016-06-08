@@ -1,3 +1,5 @@
+# General global functions
+
 init_variables()
 {
   AUTHOR_EMAIL='jack@work.com'

@@ -1,3 +1,5 @@
+# Work related functions
+
 init_work()
 {
   if [ -d "$REPOSITORY" ]

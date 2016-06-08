@@ -1,3 +1,5 @@
+# Inputs validation functions
+
 validate_position()
 {
   if ! date --date "$POSITION" &> /dev/null \
