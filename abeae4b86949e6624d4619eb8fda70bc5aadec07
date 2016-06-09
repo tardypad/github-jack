@@ -9,7 +9,6 @@ Improvements:
 - Add README
 - Add LICENSE
 - autocomplete (for templates and positions)
-- shorten pattern templates to the minimum part
 - add images to visualize the templates as renderered (introduce .tpl extension)
 - group templates inside folders (adapt use of template id as parameter)
 - add cronjob script example(s) for continuous template
