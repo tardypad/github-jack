@@ -67,7 +67,9 @@ validation::validate_shade_multiplier() {
 ################################################################################
 validation::validate_template() {
   if [[ ! -f "${TEMPLATE}" ]]; then
-    local provided_template="${SCRIPT_DIR}/templates/${TEMPLATE}.tpl"
+    local provided_template=$(
+      find "${SCRIPT_DIR}/templates/" -name "${TEMPLATE}.tpl" -print -quit
+    )
 
     if [[ -f "${provided_template}" ]]; then
       TEMPLATE="${provided_template}"
