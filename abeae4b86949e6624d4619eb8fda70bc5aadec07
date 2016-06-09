@@ -9,7 +9,7 @@ Improvements:
 - Add README
 - Add LICENSE
 - autocomplete (for templates and positions)
-- add images to visualize the templates as renderered (introduce .tpl extension)
+- add images to visualize the templates as renderered
 - group templates inside folders (adapt use of template id as parameter)
 - add cronjob script example(s) for continuous template
 
