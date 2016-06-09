@@ -8,7 +8,6 @@ Testing:
 Improvements:
 - Add README
 - Add LICENSE
-- autocomplete (for templates and positions)
 - add cronjob script example(s) for continuous template
 
 New Features:
@@ -29,4 +28,5 @@ Discarded:
 Research:
 - use getopt or getopts for parsing inputs
 - packaging
+- autocomplete (for templates and positions)
 - manual
