@@ -61,40 +61,41 @@ Usage: $( basename $0 ) [ARGUMENT]...
 Generate the work to be displayed on Github's contributions board
 
 OPTIONAL ARGUMENTS:
-  -e, --email       VALUE     define worker email
+  -e, --email       VALUE     define author email
   -f. --force                 skip any confirmation question
   -g. --github      USERNAME  calculate multiplier from Github user profile
+                              the value takes precedence over a shade argument
   -h, --help                  show this message only
   -k, --keep                  skip the reset of the work repository
   -m, --message     VALUE     define work message
-  -n, --name        VALUE     define worker name
-  -p, --position    DATE/ID   define template position
+  -n, --name        VALUE     define author name
+  -p, --position    DATE/ID   define template position with a start date or
+                              an identifier (see values below)
   -r, --repository  FOLDER    define work repository
+                              gets created if doesn't exists, reset otherwise
   -s, --shade       INT       multiply work to adjust color shades
-  -t, --template    FILE/ID   define work template
+  -t, --template    FILE/ID   define work template with a file or
+                              an identifier (see values below)
   -v, --verbose               enable verbose mode
-  -w, --write       VALUE     write work message into repository file
+  -w, --write       FILENAME  write the message into a repository file
+                              for each single work
 
-PROVIDED TEMPLATES IDENTIFIER:
-  In ${SCRIPT_DIR}/templates/ folder:
-$( find "${SCRIPT_DIR}/templates/" -type f -printf '   - %f\n' )
+PROVIDED TEMPLATES IDENTIFIERS:
+  See all filenames within the templates folder
+  ${SCRIPT_DIR}/templates/
 
-WORK TEMPLATE POSITIONS:
-  left      work starts on the left side of the board
-  center    work is centered on the board
-  right     work ends on the right side of the board
+TEMPLATE POSITIONS IDENTIFIERS:
+  left      work starts on the left side of the current board
+  center    work is centered on the current board
+  right     work ends on the right side of the current board
 
 DEFAULT VALUES:
-  work repository    current folder
-  work template      jack
-  work position      left
-  worker name        user global git name (Jack if not defined)
-  worker email       user global git email (jack@work.com if not defined)
-  work message       All work and no play makes Jack a dull boy.
-
-NOTES
-  - In case both the github and shade arguments are provided, the multiplier
-    calculated from the Github profile takes precedence
+  repository        current folder
+  template          jack
+  position          left
+  author name       user global git name (Jack if not defined)
+  author email      user global git email (jack@work.com if not defined)
+  message           All work and no play makes Jack a dull boy.
 EOF
   exit 0
 }
