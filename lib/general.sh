@@ -81,7 +81,7 @@ OPTIONAL ARGUMENTS:
                               for each single work
 
 PROVIDED TEMPLATES IDENTIFIERS:
-  See all filenames within the templates folder
+  Use the basename of all files within the templates folder
   ${SCRIPT_DIR}/templates/
 
 TEMPLATE POSITIONS IDENTIFIERS:
