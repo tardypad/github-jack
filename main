@@ -1,5 +1,10 @@
 #!/bin/bash
 #
+# Copyright (c) 2016 Damien Tardy-Panis
+#
+# This file is subject to the terms and conditions defined in
+# file 'LICENSE', which is part of this source code package.
+#
 # Main program to generate the Github's contributions board work
 
 SCRIPT_DIR=$( dirname "$( readlink --canonicalize "$0" )" )
