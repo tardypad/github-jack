@@ -99,7 +99,7 @@ work::day_count() {
 
 
 ################################################################################
-# Prints the start date of the work
+# Define the start date of the work
 # Globals:
 #   POSITION
 #   TEMPLATE
@@ -108,7 +108,7 @@ work::day_count() {
 # Returns:
 #   None
 ################################################################################
-work::start_date() {
+work::define_start_date() {
   # Define approximate position if an identifier is used
   if [[ "${POSITION}" == 'left' ]]; then
     POSITION='-1 year'
@@ -124,7 +124,10 @@ work::start_date() {
 
   # Find the closest Sunday
   local start="$( echo "${POSITION}" | sed "s/ /\\\ /g" )"
-  echo "${start}"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
+
+  POSITION=$(
+    echo "${start}"'\ +'{0..6}'\ days' | xargs -n 1 date --date | grep Sun
+  )
 }
 
 
@@ -147,7 +150,7 @@ work::start_date() {
 ################################################################################
 work::commit_all() {
   local date_format='%Y-%m-%d'
-  local start_date="$( date --date "$( work::start_date )" +${date_format} )"
+  local start_date="$( date --date "${POSITION}" +${date_format} )"
   local days=$(( $( wc --max-line-length < "${TEMPLATE}" ) * 7 ))
   local date count
 

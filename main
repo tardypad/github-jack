@@ -14,6 +14,7 @@ general::parse_inputs "$@"
 general::validate_inputs
 
 work::define_multiplier
+work::define_start_date
 work::init
 work::commit_all
 
