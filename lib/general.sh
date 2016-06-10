@@ -88,6 +88,7 @@ TEMPLATE POSITIONS IDENTIFIERS:
   left      work starts on the left side of the current board
   center    work is centered on the current board
   right     work ends on the right side of the current board
+  last      work starts after the last work in the repository (left if none)
 
 DEFAULT VALUES:
   repository        current folder

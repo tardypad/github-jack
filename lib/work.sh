@@ -102,6 +102,7 @@ work::day_count() {
 # Define the start date of the work
 # Globals:
 #   POSITION
+#   REPOSITORY
 #   TEMPLATE
 # Arguments:
 #   None
@@ -109,6 +110,30 @@ work::day_count() {
 #   None
 ################################################################################
 work::define_start_date() {
+  if [[ "${POSITION}" == 'last' ]]; then
+    if [[ -d "${REPOSITORY}/.git" ]]; then
+      # handle empty work repository by ignoring error output
+      local last_author_timestamp=$(
+        git \
+        --git-dir "${REPOSITORY}/.git" \
+        --work-tree "${REPOSITORY}" \
+        log \
+        --pretty="format:%at" \
+        2> /dev/null \
+          | sort --reverse \
+          | head --lines 1
+      )
+
+      if [[ -n "${last_author_timestamp}" ]]; then
+        POSITION=$( date -d @"${last_author_timestamp}" )
+      else
+        POSITION='left'
+      fi
+    else
+      POSITION='left'
+    fi
+  fi
+
   # Define approximate position if an identifier is used
   if [[ "${POSITION}" == 'left' ]]; then
     POSITION='-1 year'

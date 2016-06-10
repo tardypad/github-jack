@@ -14,7 +14,8 @@ validation::validate_position() {
   if ! date --date "${POSITION}" &> /dev/null \
      && [[ "${POSITION}" != 'left' ]] \
      && [[ "${POSITION}" != 'center' ]] \
-     && [[ "${POSITION}" != 'right' ]]; then
+     && [[ "${POSITION}" != 'right' ]] \
+     && [[ "${POSITION}" != 'last' ]]; then
     general::error 'Invalid position date or identifier'
   fi
 }
