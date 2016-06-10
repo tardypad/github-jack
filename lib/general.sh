@@ -46,7 +46,7 @@ general::init_variables() {
 
 
 ################################################################################
-# Prints the usage explanation of the main program and exit
+# Print the usage explanation of the main program and exit
 # Globals:
 #   SCRIPT_DIR
 # Arguments:
@@ -102,7 +102,7 @@ EOF
 
 
 ################################################################################
-# Prints an error message and exit
+# Print an error message and exit
 # Globals:
 #   None
 # Arguments:
@@ -224,7 +224,7 @@ general::parse_inputs() {
 
 
 ################################################################################
-# Validates all the inputs
+# Validate all the inputs
 # Globals:
 #   GITHUB_USERNAME
 #   POSITION

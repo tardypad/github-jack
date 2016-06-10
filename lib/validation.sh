@@ -2,7 +2,7 @@
 
 
 ################################################################################
-# Validates the position input
+# Validate the position input
 # Globals:
 #   POSITION
 # Arguments:
@@ -21,7 +21,7 @@ validation::validate_position() {
 
 
 ################################################################################
-# Validates the Github username input
+# Validate the Github username input
 # Globals:
 #   GITHUB_USERNAME
 # Arguments:
@@ -40,7 +40,7 @@ validation::validate_github_username() {
 
 
 ################################################################################
-# Validates the shade multiplier input
+# Validate the shade multiplier input
 # Globals:
 #   SHADE_MULTIPLIER
 # Arguments:
@@ -56,7 +56,7 @@ validation::validate_shade_multiplier() {
 
 
 ################################################################################
-# Validates the template input
+# Validate the template input
 # Globals:
 #   SCRIPT_DIR
 #   TEMPLATE

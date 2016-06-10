@@ -74,7 +74,7 @@ work::define_multiplier() {
 
 
 ################################################################################
-# Prints the commits count of a day
+# Print the commits count of a day
 # Globals:
 #   SHADE_MULTIPLIER
 #   TEMPLATE
@@ -165,7 +165,7 @@ work::commit_all() {
 
 
 ################################################################################
-# Prints a random time in the format HH:MM:SS
+# Print a random time in the format HH:MM:SS
 # Globals:
 #   RANDOM
 # Arguments:
