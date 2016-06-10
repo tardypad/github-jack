@@ -7,7 +7,6 @@ Testing:
 
 Improvements:
 - Add README
-- Add LICENSE
 - add cronjob script example(s) for continuous template
 
 New Features:
