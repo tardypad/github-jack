@@ -14,7 +14,7 @@
 # Returns:
 #   0 if reset is not confirmed
 ################################################################################
-work::init() {
+work::init_repository() {
   if [[ -d "${REPOSITORY}" ]]; then
     if ! ${KEEP}; then
       local name=$( basename $( readlink --canonicalize "${REPOSITORY}" ) )

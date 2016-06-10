@@ -15,7 +15,7 @@ general::validate_inputs
 
 work::define_multiplier
 work::define_start_date
-work::init
+work::init_repository
 work::commit_all
 
 exit 0
