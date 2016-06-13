@@ -20,9 +20,9 @@ Discarded:
 - combine color and username options (same shade multiplier purpose)
   github usernames can be integers too and thus we wouldn't be able to
   differentiate them
-- add option to specify spaces after position (offset)
+- add option to specify spaces after position (--offset)
   would be useful when adding new template after last one
-  but would "require" another option to specify the value to fill those days
+  but would "require" another option (--fill-offset) to specify the value to fill those days
   better put the spaces inside the templates themselves
 
 Research:
