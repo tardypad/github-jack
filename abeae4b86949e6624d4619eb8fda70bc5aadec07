@@ -9,6 +9,9 @@ Improvements:
 - add cronjob script example(s) for continuous template
 
 New Features:
+- add option to dynamically create text templates (--template-text "YO!")
+  provide a template for most common ASCII characters
+  and assemble them during the generation
 
 Discarded:
 - option to define value to fill days outside the template
@@ -21,7 +24,6 @@ Discarded:
   would be useful when adding new template after last one
   but would "require" another option to specify the value to fill those days
   better put the spaces inside the templates themselves
--
 
 Research:
 - use getopt or getopts for parsing inputs
