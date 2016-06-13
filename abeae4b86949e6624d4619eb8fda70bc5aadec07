@@ -1,7 +1,7 @@
 Cleaning:
 
 Bugs:
-left/center/right is not precise with half/full weeks display
+left/center/righti/last is not precise with half/full weeks display
 
 Testing:
 
@@ -17,10 +17,11 @@ Discarded:
 - combine color and username options (same shade multiplier purpose)
   github usernames can be integers too and thus we wouldn't be able to
   differentiate them
-- add option to specify spaces after position
+- add option to specify spaces after position (offset)
   would be useful when adding new template after last one
   but would "require" another option to specify the value to fill those days
   better put the spaces inside the templates themselves
+-
 
 Research:
 - use getopt or getopts for parsing inputs
