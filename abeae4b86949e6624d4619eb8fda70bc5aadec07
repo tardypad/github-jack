@@ -6,7 +6,6 @@ left/center/right is not precise with half/full weeks display
 Testing:
 
 Improvements:
-- Add README
 - add cronjob script example(s) for continuous template
 
 New Features:
