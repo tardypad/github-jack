@@ -21,7 +21,53 @@ Features
 - define the template position relatively (left, center,...) or absolutely (start date)
 - write the message into a repository file for each commit
 
-Launch the command with the _--help_ option to see the full usage.
+
+Usage
+-----
+
+```
+Usage: gh-jack [ARGUMENT]...
+
+Generate the work to be displayed on Github's contributions board
+
+OPTIONAL ARGUMENTS:
+  -e, --email       VALUE     define author email
+  -f. --force                 skip any confirmation question
+  -g. --github      USERNAME  calculate multiplier from Github user profile
+                              the value takes precedence over a shade argument
+  -h, --help                  show this message only
+  -k, --keep                  skip the reset of the work repository
+  -m, --message     VALUE     define work message
+  -n, --name        VALUE     define author name
+  -p, --position    DATE/ID   define template position with a start date or
+                              an identifier (see values below)
+  -r, --repository  FOLDER    define work repository
+                              gets created if doesn't exists, reset otherwise
+  -s, --shade       INT       multiply work to adjust color shades
+  -t, --template    FILE/ID   define work template with a file or
+                              an identifier (see values below)
+  -v, --verbose               enable verbose mode
+  -w, --write       FILENAME  write the message into a repository file
+                              for each single work
+
+PROVIDED TEMPLATES IDENTIFIERS:
+  Use the basename of all files within the templates folder
+  templates/
+
+TEMPLATE POSITIONS IDENTIFIERS:
+  left      work starts on the left side of the current board
+  center    work is centered on the current board
+  right     work ends on the right side of the current board
+  last      work starts after the last work in the repository (left if none)
+
+DEFAULT VALUES:
+  repository        current folder
+  template          jack
+  position          left
+  author name       user global git name (Jack if not defined)
+  author email      user global git email (jack@work.com if not defined)
+  message           All work and no play makes Jack a dull boy.
+```
 
 
 Templates
