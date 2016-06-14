@@ -114,18 +114,20 @@ work::define_start_date() {
     fi
   fi
 
-  # Define approximate position if an identifier is used
-  if [[ "${POSITION}" == 'left' ]]; then
-    POSITION='-1 year'
-  else
-    local template_cols=$( wc --max-line-length < "${TEMPLATE}" )
+  local template_cols=$( wc --max-line-length < "${TEMPLATE}" )
 
-    if [[ "${POSITION}" == 'center' ]]; then
+  # Define approximate position if an identifier is used
+  case "${POSITION}" in
+    left)
+      POSITION='-1 year'
+      ;;
+    center)
       POSITION="-53 weeks $(( (53 - ${template_cols})/2 )) weeks"
-    elif [[ "${POSITION}" == 'right' ]]; then
+      ;;
+    right)
       POSITION="-${template_cols} weeks"
-    fi
-  fi
+      ;;
+  esac
 
   # Find the closest Sunday
   local start="$( echo "${POSITION}" | sed "s/ /\\\ /g" )"
