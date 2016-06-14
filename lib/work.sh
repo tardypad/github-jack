@@ -79,31 +79,6 @@ work::define_multiplier() {
 
 
 ################################################################################
-# Print the commits count of a day
-# Globals:
-#   SHADE_MULTIPLIER
-#   TEMPLATE
-# Arguments:
-#   - day number
-# Returns:
-#   None
-################################################################################
-work::day_count() {
-  local day_number="$1"
-  local row=$(( ${day_number} % 7 + 1 ))
-  local col=$(( ${day_number} / 7 + 1 ))
-  local index=$(
-    head "${TEMPLATE}" --lines ${row} \
-      | tail --lines 1 \
-      | head --bytes ${col} \
-      | tail --bytes 1
-  )
-
-  echo $(( ${index} * ${SHADE_MULTIPLIER} ))
-}
-
-
-################################################################################
 # Define the start date of the work
 # Globals:
 #   POSITION
@@ -162,6 +137,49 @@ work::define_start_date() {
 
 
 ################################################################################
+# Print a random time in the format HH:MM:SS
+# Globals:
+#   RANDOM
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################################################
+work::random_time() {
+  local hours=$( printf %02d $(( ${RANDOM} % 24 )) )
+  local minutes=$( printf %02d $(( ${RANDOM} % 60 )) )
+  local seconds=$( printf %02d $(( ${RANDOM} % 60 )) )
+
+  echo ${hours}:${minutes}:${seconds}
+}
+
+
+################################################################################
+# Print the commits count of a day
+# Globals:
+#   SHADE_MULTIPLIER
+#   TEMPLATE
+# Arguments:
+#   - day number
+# Returns:
+#   None
+################################################################################
+work::day_count() {
+  local day_number="$1"
+  local row=$(( ${day_number} % 7 + 1 ))
+  local col=$(( ${day_number} / 7 + 1 ))
+  local index=$(
+    head "${TEMPLATE}" --lines ${row} \
+      | tail --lines 1 \
+      | head --bytes ${col} \
+      | tail --bytes 1
+  )
+
+  echo $(( ${index} * ${SHADE_MULTIPLIER} ))
+}
+
+
+################################################################################
 # Create all the work commits
 # Globals:
 #   AUTHOR_EMAIL
@@ -191,24 +209,6 @@ work::commit_all() {
   done
 
   general::info "${MESSAGE}"
-}
-
-
-################################################################################
-# Print a random time in the format HH:MM:SS
-# Globals:
-#   RANDOM
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################################################
-work::random_time() {
-  local hours=$( printf %02d $(( ${RANDOM} % 24 )) )
-  local minutes=$( printf %02d $(( ${RANDOM} % 60 )) )
-  local seconds=$( printf %02d $(( ${RANDOM} % 60 )) )
-
-  echo ${hours}:${minutes}:${seconds}
 }
 
 
