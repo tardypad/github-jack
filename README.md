@@ -5,8 +5,8 @@ Generate work to be displayed on your Github's contributions board
 
 _All work and no play makes Jack a dull boy._
 
-Inspired by [Gitfiti](https://github.com/gelstudios/gitfiti) and other derivatives listed there.
-Written entirely in Bash.
+Inspired by [Gitfiti](https://github.com/gelstudios/gitfiti) and other derivatives listed there.  
+Written entirely in Bash.  
 No dependency on external libraries, only use common commands.
 
 
