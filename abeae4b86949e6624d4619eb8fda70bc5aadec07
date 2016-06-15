@@ -24,6 +24,9 @@ Discarded:
   would be useful when adding new template after last one
   but would "require" another option (--fill-offset) to specify the value to fill those days
   simpler to put the spaces inside the templates themselves
+- define default write filename value
+  make it an optional argument so we can use directly --write as such
+  doesn't add much value since there is already no write by default
 
 Research:
 - packaging
