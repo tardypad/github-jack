@@ -1,7 +1,9 @@
 Cleaning:
 
 Bugs:
-left/center/righti/last is not precise with half/full weeks display
+- left/center/righti/last is not precise with half/full weeks display
+- options "--repository --force" would try and fail to create a folder
+  named "--force"
 
 Testing:
 
