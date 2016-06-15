@@ -146,6 +146,7 @@ general::info() {
 #   GITHUB_USERNAME
 #   KEEP
 #   MESSAGE
+#   OPTIONS
 #   POSITION
 #   REPOSITORY
 #   SHADE_MULTIPLIER
@@ -159,10 +160,27 @@ general::info() {
 #
 ################################################################################
 general::parse_inputs() {
+   local long_options='email:,force,github:,help,keep,message:'
+   long_options="${long_options},name:,position:,repository:,shade:"
+   long_options="${long_options},template:,verbose,write:"
+
+  OPTIONS=$(
+    getopt \
+    --options e:fg:hkm:n:p:r:s:t:vw: \
+    --longoptions "${long_options}" \
+    --name "$( basename $0 )" \
+    -- "$@"
+  )
+
+  if [[ $? -ne 0 ]]; then
+    general::error
+  fi
+
+  eval set -- "${OPTIONS}"
+
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
       --email|-e)
-        [[ -n "$2" ]] || general::error 'Missing email value'
         AUTHOR_EMAIL="$2"
         shift 2
         ;;
@@ -171,7 +189,6 @@ general::parse_inputs() {
         shift
         ;;
       --github|-g)
-        [[ -n "$2" ]] || general::error 'Missing Github username'
         GITHUB_USERNAME="$2"
         shift 2
         ;;
@@ -183,32 +200,26 @@ general::parse_inputs() {
         shift
         ;;
       --message|-m)
-        [[ -n "$2" ]] || general::error 'Missing message value'
         MESSAGE="$2"
         shift 2
         ;;
       --name|-n)
-        [[ -n "$2" ]] || general::error 'Missing name value'
         AUTHOR_NAME="$2"
         shift 2
         ;;
       --position|-p)
-        [[ -n "$2" ]] || general::error 'Missing position date or identifier'
         POSITION="$2"
         shift 2
         ;;
       --repository|-r)
-        [[ -n "$2" ]] || general::error 'Missing repository path'
         REPOSITORY="$2"
         shift 2
         ;;
       --shade|-s)
-        [[ -n "$2" ]] || general::error 'Missing shade multiplier'
         SHADE_MULTIPLIER="$2"
         shift 2
         ;;
       --template|-t)
-        [[ -n "$2" ]] || general::error 'Missing template path or identifier'
         TEMPLATE="$2"
         shift 2
         ;;
@@ -217,9 +228,11 @@ general::parse_inputs() {
         shift
         ;;
       --write|-w)
-        [[ -n "$2" ]] || general::error 'Missing write filename value'
         WRITE_FILE="$2"
         shift 2
+        ;;
+      --)
+        shift
         ;;
       *)
         general::error "Invalid argument '$1'"
