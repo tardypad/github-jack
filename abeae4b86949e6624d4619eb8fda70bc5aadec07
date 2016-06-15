@@ -23,7 +23,7 @@ Discarded:
 - add option to specify spaces after position (--offset)
   would be useful when adding new template after last one
   but would "require" another option (--fill-offset) to specify the value to fill those days
-  better put the spaces inside the templates themselves
+  simpler to put the spaces inside the templates themselves
 
 Research:
 - use getopt or getopts for parsing inputs
