@@ -180,63 +180,21 @@ general::parse_inputs() {
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
-      --email|-e)
-        AUTHOR_EMAIL="$2"
-        shift 2
-        ;;
-      --force|-f)
-        FORCE=true
-        shift
-        ;;
-      --github|-g)
-        GITHUB_USERNAME="$2"
-        shift 2
-        ;;
-      --help|-h)
-        general::usage
-        ;;
-      --keep|-k)
-        KEEP=true
-        shift
-        ;;
-      --message|-m)
-        MESSAGE="$2"
-        shift 2
-        ;;
-      --name|-n)
-        AUTHOR_NAME="$2"
-        shift 2
-        ;;
-      --position|-p)
-        POSITION="$2"
-        shift 2
-        ;;
-      --repository|-r)
-        REPOSITORY="$2"
-        shift 2
-        ;;
-      --shade|-s)
-        SHADE_MULTIPLIER="$2"
-        shift 2
-        ;;
-      --template|-t)
-        TEMPLATE="$2"
-        shift 2
-        ;;
-      --verbose|-v)
-        VERBOSE=true
-        shift
-        ;;
-      --write|-w)
-        WRITE_FILE="$2"
-        shift 2
-        ;;
-      --)
-        shift
-        ;;
-      *)
-        general::error "Invalid argument '$1'"
-        ;;
+      --email|-e) AUTHOR_EMAIL="$2"; shift 2 ;;
+      --force|-f) FORCE=true; shift ;;
+      --github|-g) GITHUB_USERNAME="$2"; shift 2 ;;
+      --help|-h) general::usage ;;
+      --keep|-k) KEEP=true; shift ;;
+      --message|-m) MESSAGE="$2"; shift 2 ;;
+      --name|-n) AUTHOR_NAME="$2"; shift 2 ;;
+      --position|-p) POSITION="$2"; shift 2 ;;
+      --repository|-r) REPOSITORY="$2"; shift 2 ;;
+      --shade|-s) SHADE_MULTIPLIER="$2"; shift 2 ;;
+      --template|-t) TEMPLATE="$2"; shift 2 ;;
+      --verbose|-v) VERBOSE=true; shift ;;
+      --write|-w) WRITE_FILE="$2"; shift 2 ;;
+      --) shift ;;
+      *) general::error "Invalid argument '$1'" ;;
     esac
   done
 }
