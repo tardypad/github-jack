@@ -14,7 +14,6 @@ SCRIPT_DIR=$( dirname "$( readlink --canonicalize "$0" )" )
 . "${SCRIPT_DIR}/lib/work.sh"
 
 general::init_variables
-
 general::parse_inputs "$@"
 general::validate_inputs
 
