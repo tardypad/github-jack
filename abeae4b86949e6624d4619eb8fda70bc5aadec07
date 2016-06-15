@@ -26,7 +26,6 @@ Discarded:
   simpler to put the spaces inside the templates themselves
 
 Research:
-- use getopt or getopts for parsing inputs
 - packaging
 - autocomplete (for templates and positions)
 - manual
