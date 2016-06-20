@@ -92,7 +92,7 @@ validation::validate_template() {
 
   # Ignore trailing newlines for further checks
   local trimmed_template=$(
-    sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' "${TEMPLATE}"
+    cat -- "${TEMPLATE}" | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}'
   )
 
   if [[ $( echo "${trimmed_template}" | wc --lines ) != 7 ]]; then

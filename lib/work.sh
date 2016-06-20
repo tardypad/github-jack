@@ -22,7 +22,7 @@
 work::init_repository() {
   if [[ -d "${REPOSITORY}" ]]; then
     if ! ${KEEP}; then
-      local name=$( basename $( readlink --canonicalize "${REPOSITORY}" ) )
+      local name=$( basename $( readlink --canonicalize -- "${REPOSITORY}" ) )
       local write_file_path="${REPOSITORY}/${WRITE_FILE}"
 
       if ! ${FORCE} && \
@@ -38,12 +38,12 @@ work::init_repository() {
       fi
 
       general::info "Resetting ${name} work repository"
-      rm -rf "${REPOSITORY}/.git"
+      rm -rf -- "${REPOSITORY}/.git"
       [[ -z "${WRITE_FILE}" ]] || > "${write_file_path}"
     fi
   else
     general::info "Creating ${REPOSITORY} work repository"
-    mkdir --parents "${REPOSITORY}"
+    mkdir --parents -- "${REPOSITORY}"
   fi
 
   git --git-dir "${REPOSITORY}/.git" --work-tree "${REPOSITORY}" init --quiet
@@ -171,7 +171,7 @@ work::day_count() {
   local row=$(( ${day_number} % 7 + 1 ))
   local col=$(( ${day_number} / 7 + 1 ))
   local index=$(
-    head "${TEMPLATE}" --lines ${row} \
+    head --lines ${row} -- "${TEMPLATE}" \
       | tail --lines 1 \
       | head --bytes ${col} \
       | tail --bytes 1
@@ -270,7 +270,7 @@ work::commit_single() {
     git \
     --git-dir "${REPOSITORY}/.git" \
     --work-tree "${REPOSITORY}" \
-    add \
+    add -- \
     "${WRITE_FILE}"
   fi
 
