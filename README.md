@@ -3,7 +3,9 @@ Github Jack
 
 Generate work to be displayed on your Github's contributions board
 
-_All work and no play makes Jack a dull boy._
+![All work and](/assets/jack_1.png?raw=true "All work and")  
+![no play makes](/assets/jack_2.png?raw=true "no play makes")  
+![Jack a dull boy.](/assets/jack_3.png?raw=true "Jack a dull boy.")
 
 Inspired by [Gitfiti](https://github.com/gelstudios/gitfiti) and other derivatives listed there.  
 Written entirely in Bash.  
