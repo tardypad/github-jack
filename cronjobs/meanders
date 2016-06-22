@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# Copyright (c) 2016 Damien Tardy-Panis
+#
+# This file is subject to the terms and conditions defined in
+# file 'LICENSE', which is part of this source code package.
+#
+# Example cronjob to generate meanders board
+
+REPOSITORY='/home/jack/jack-board'
+
+is_board_full() {
+  local last_author_timestamp=$(
+    git \
+    --git-dir "${REPOSITORY}/.git" \
+    --work-tree "${REPOSITORY}" \
+    log \
+    --pretty="format:%at" \
+    2> /dev/null \
+      | sort --reverse \
+      | head --lines 1
+  )
+
+  local now_timestamp=$( date +%s )
+
+  if [[ -z "${last_author_timestamp}" ]] \
+     || [[ ${last_author_timestamp} -lt ${now_timestamp} ]]; then
+    return 1
+  fi
+
+  return 0
+}
+
+while ! is_board_full; do
+  gh-jack \
+    --force \
+    --repository "${REPOSITORY}" \
+    --position last \
+    --keep \
+    --shade 2 \
+    --template meander_2 \
+    --write story
+done
+
+git \
+  --git-dir "${REPOSITORY}/.git" \
+  --work-tree "${REPOSITORY}" \
+  push \
+  --force \
+  --quiet
+
+exit 0
