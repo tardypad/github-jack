@@ -83,6 +83,21 @@ Templates follow almost the same structure as the ones used by [github-board](ht
 Some templates are provided, see the [templates](templates/) folder.
 
 
+Cronjobs
+--------
+
+To have a board always filled over time, you can either:
+- use a really long template once (like the default 'jack' one). Each part will unroll over time.
+- use the tool within a cronjob to have the current board filled as wanted
+
+Some example usages within cronjobs are provided, see the [cronjobs](cronjobs/) folder.  
+Those examples create a board by repeating a builtin pattern template over time as needed.  
+They only expect a local repository to be initialized and configured to be allowed to push to his Github upstream.
+
+![Meanders board](/assets/meanders.png?raw=true "Meanders board")  
+![Invaders board](/assets/invaders.png?raw=true "Invaders board")
+
+
 Licenses
 --------
 
