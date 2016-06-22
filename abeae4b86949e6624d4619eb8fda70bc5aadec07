@@ -6,8 +6,6 @@ Bugs:
 Testing:
 
 Improvements:
-- add cronjob script example(s) for continuous template
-  with an example image of a full result for invaders and meander
 
 New Features:
 - add option to dynamically create text templates (--template-text "YO!")
