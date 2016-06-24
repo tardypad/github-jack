@@ -11,6 +11,8 @@ New Features:
 - add option to dynamically create text templates (--template-text "YO!")
   provide a template for most common ASCII characters
   and assemble them during the generation
+- add option to randomly switch some adjacent characters in the message
+  to produce the same typing result as in the Shining movie
 
 Discarded:
 - option to define value to fill days outside the template
