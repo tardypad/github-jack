@@ -25,6 +25,8 @@
 #   None
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 general::init_variables() {
   AUTHOR_EMAIL='jack@work.com'
@@ -57,6 +59,8 @@ general::init_variables() {
 # Arguments:
 #   None
 # Returns:
+#   None
+# Exits:
 #   0
 ################################################################################
 general::usage() {
@@ -114,6 +118,8 @@ EOF
 # Arguments:
 #   - message to display (optional)
 # Returns:
+#   None
+# Exits:
 #   1
 ################################################################################
 general::error() {
@@ -131,6 +137,8 @@ general::error() {
 #   - message to display
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 general::info() {
   "${VERBOSE}" && [[ -n "$1" ]] && echo "$1"
@@ -156,8 +164,10 @@ general::info() {
 # Arguments:
 #   Program's arguments
 # Returns:
-#   1 in case of invalid argument or missing value
-#
+#   None
+# Exits:
+#   0 if print usage
+#   1 if invalid argument
 ################################################################################
 general::parse_inputs() {
    local long_options='email:,force,github:,help,keep,message:'
@@ -211,6 +221,8 @@ general::parse_inputs() {
 # Arguments:
 #   None
 # Returns:
+#   None
+# Exits:
 #   1 if at least one of them is invalid
 ################################################################################
 general::validate_inputs() {

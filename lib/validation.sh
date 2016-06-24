@@ -13,6 +13,8 @@
 # Arguments:
 #   None
 # Returns:
+#   None
+# Exits:
 #   1 if invalid
 ################################################################################
 validation::validate_position() {
@@ -33,6 +35,8 @@ validation::validate_position() {
 # Arguments:
 #   None
 # Returns:
+#   None
+# Exits:
 #   1 if invalid
 ################################################################################
 validation::validate_github_username() {
@@ -52,6 +56,8 @@ validation::validate_github_username() {
 # Arguments:
 #   None
 # Returns:
+#   None
+# Exits:
 #   1 if invalid
 ################################################################################
 validation::validate_shade_multiplier() {
@@ -69,6 +75,8 @@ validation::validate_shade_multiplier() {
 # Arguments:
 #   None
 # Returns:
+#   None
+# Exits:
 #   1 if invalid
 ################################################################################
 validation::validate_template() {

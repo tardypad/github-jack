@@ -17,6 +17,8 @@
 # Arguments:
 #   None
 # Returns:
+#   None
+# Exits:
 #   0 if reset is not confirmed
 ################################################################################
 work::init_repository() {
@@ -58,6 +60,8 @@ work::init_repository() {
 #   None
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 work::define_multiplier() {
   if [[ -n "${GITHUB_USERNAME}" ]]; then
@@ -88,6 +92,8 @@ work::define_multiplier() {
 #   None
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 work::define_start_date() {
   if [[ "${POSITION}" == 'last' ]]; then
@@ -146,6 +152,8 @@ work::define_start_date() {
 #   None
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 work::random_time() {
   local hours=$( printf %02d $(( ${RANDOM} % 24 )) )
@@ -165,6 +173,8 @@ work::random_time() {
 #   - day number
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 work::day_count() {
   local day_number="$1"
@@ -197,6 +207,8 @@ work::day_count() {
 #   None
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 work::commit_all() {
   local date_format='%Y-%m-%d'
@@ -228,6 +240,8 @@ work::commit_all() {
 #   - number of commits to create
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 work::commit_day() {
   local date="$1"
@@ -260,6 +274,8 @@ work::commit_day() {
 #   - commit time in the format HH:MM:SS
 # Returns:
 #   None
+# Exits:
+#   Never
 ################################################################################
 work::commit_single() {
   local date="$1"
