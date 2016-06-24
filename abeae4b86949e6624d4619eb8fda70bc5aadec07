@@ -6,6 +6,7 @@ Bugs:
 Testing:
 
 Improvements:
+- Don't exit directly within the lib functions, use return there
 
 New Features:
 - add option to dynamically create text templates (--template-text "YO!")
