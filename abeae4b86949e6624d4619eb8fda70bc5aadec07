@@ -7,6 +7,7 @@ Testing:
 
 Improvements:
 - Don't exit directly within the lib functions, use return there
+- change the committer name and email with --name and --email options as well
 
 New Features:
 - add option to dynamically create text templates (--template-text "YO!")
