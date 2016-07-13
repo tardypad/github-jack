@@ -9,6 +9,8 @@
 
 SCRIPT_DIR=$( dirname "$( readlink --canonicalize "$0" )" )
 
+export LC_ALL=en_US.UTF-8
+
 . "${SCRIPT_DIR}/lib/general.sh"
 . "${SCRIPT_DIR}/lib/validation.sh"
 . "${SCRIPT_DIR}/lib/work.sh"
