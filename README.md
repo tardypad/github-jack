@@ -23,6 +23,15 @@ Features
 - define the template position relatively (left, center,...) or absolutely (start date)
 - write the message into a repository file for each commit
 
+Quickstart
+----------
+Build the docker container.
+
+    docker build -t ghjack .
+
+Run the docker container from the directory you want your commits to be. A new repo will be initialized for you if one does not exist.
+
+    docker run -it --rm -v $(pwd):/app -v $HOME/.gitconfig:/root/.gitconfig ghjack -f -v
 
 Usage
 -----
