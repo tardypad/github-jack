@@ -1,7 +1,7 @@
-Github Jack
+# Github Jack
 ============
 
-Generate work to be displayed on your Github's contributions board
+# Generate work to be displayed on your Github's contributions board
 
 ![All work and](/assets/jack_1.png?raw=true "All work and")  
 ![no play makes](/assets/jack_2.png?raw=true "no play makes")  
